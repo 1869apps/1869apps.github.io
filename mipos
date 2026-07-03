@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiPOS — Sistema Punto de Venta para Emprendedores Cubanos | 1869apps</title>
+  <meta name="description" content="MiPOS: Sistema punto de venta 100% offline para la realidad cubana. Controla ventas, inventario y caja sin depender de internet.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body { background-color: #ffffff; }
+    ::selection { background: rgba(225,29,72,0.15); color: #9f1239; }
+    
+    .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .shadow-rose-soft { box-shadow: 0 10px 40px -10px rgba(244, 63, 94, 0.15); }
+    
+    .card-hover { transition: transform 400ms, box-shadow 400ms, border-color 400ms, opacity 600ms; will-change: transform, opacity; }
+    .card-hover:hover { transform: translateY(-0.5rem); border-color: rgba(244,63,94,0.4); box-shadow: 0 20px 50px -15px rgba(244,63,94,0.2); }
+    
+    .reveal { opacity: 0; transform: translateY(20px); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .gradient-text-rose { background: linear-gradient(135deg, #be123c 0%, #f43f5e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    
+    @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; } }
+    .blob { animation: morph 8s ease-in-out infinite; }
+    
+    .btn-primary { background: linear-gradient(135deg, #2563eb, #4f46e5); box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.3s ease; }
+    .btn-primary:hover { box-shadow: 0 8px 25px rgba(37,99,235,0.4); background: linear-gradient(135deg, #1d4ed8, #4338ca); transform: translateY(-1px); }
+    
+    .btn-rose { background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 4px 15px rgba(225,29,72,0.3); transition: all 0.3s ease; }
+    .btn-rose:hover { box-shadow: 0 8px 25px rgba(225,29,72,0.4); background: linear-gradient(135deg, #be123c, #e11d48); transform: translateY(-1px); }
+    
+    .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
+    .mobile-menu.open { transform: translateX(0); }
+  </style>
+</head>
+<body class="text-slate-800 font-sans antialiased overflow-x-hidden">
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-rose-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3" aria-label="Inicio 1869apps">
+        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto object-contain" />
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html#inicio" class="text-sm text-slate-600 hover:text-rose-600 transition-colors duration-150 font-medium">Inicio</a>
+        <a href="index.html#apps" class="text-sm text-slate-600 hover:text-rose-600 transition-colors duration-150 font-medium">Proyectos</a>
+        <a href="index.html#testimonios" class="text-sm text-slate-600 hover:text-rose-600 transition-colors duration-150 font-medium">Testimonios</a>
+        <a href="index.html#contacto" class="text-sm text-slate-600 hover:text-rose-600 transition-colors duration-150 font-medium">Contacto</a>
+      </div>
+      <div class="hidden md:flex items-center gap-4">
+        <a href="index.html#contacto" class="btn-rose text-white text-xs font-medium h-10 px-6 rounded-full flex items-center transition-all duration-300">Hablemos</a>
+      </div>
+      <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden text-slate-600 hover:text-rose-600 transition-colors">
+        <span class="iconify" data-icon="lucide:menu" data-width="24"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-white border-l border-rose-100 p-6 md:hidden z-50 shadow-2xl">
+      <div class="flex justify-between items-center mb-10">
+        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-8 w-auto" />
+        <button id="closeMenu" aria-label="Cerrar menú" class="text-slate-500 hover:text-rose-600">
+          <span class="iconify" data-icon="lucide:x" data-width="24"></span>
+        </button>
+      </div>
+      <div class="flex flex-col gap-6">
+        <a href="index.html#inicio" class="text-slate-700 hover:text-rose-600 transition-colors mobile-link font-medium">Inicio</a>
+        <a href="index.html#apps" class="text-slate-700 hover:text-rose-600 transition-colors mobile-link font-medium">Proyectos</a>
+        <a href="index.html#testimonios" class="text-slate-700 hover:text-rose-600 transition-colors mobile-link font-medium">Testimonios</a>
+        <a href="index.html#contacto" class="text-slate-700 hover:text-rose-600 transition-colors mobile-link font-medium">Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO Mipos ============ -->
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-white">
+    <div class="absolute top-10 left-10 w-[600px] h-[600px] bg-rose-100 blob blur-[100px] pointer-events-none opacity-60"></div>
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-orange-100 blob blur-[100px] pointer-events-none opacity-50" style="animation-delay: 4s;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-rose-200 bg-rose-50 mb-6 shadow-sm">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+            </span>
+            <span class="text-xs font-medium text-rose-700">100% Offline • Sin suscripciones • Hecho para Cuba</span>
+          </div>
+
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6 text-slate-900">
+            <span class="gradient-text-rose">MiPOS</span><br/>
+            <span class="text-slate-800 text-3xl md:text-4xl">Sistema Punto de Venta para Emprendedores Cubanos</span>
+          </h1>
+
+          <p class="text-lg md:text-xl text-slate-500 leading-relaxed mx-auto lg:mx-0 mb-10 max-w-xl">
+            La herramienta que tu negocio necesita para crecer, organizarse y vender más. Hecha para la realidad de Cuba.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
+            <a href="#contacto" class="btn-rose text-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 transition-all duration-300">
+              Solicitar Demo
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </a>
+            <a href="#caracteristicas" class="border border-rose-200 text-rose-700 bg-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 hover:border-rose-400 hover:bg-rose-50 transition-all duration-300">
+              Ver características
+            </a>
+          </div>
+        </div>
+
+        <div class="flex justify-center lg:justify-end">
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-tr from-rose-200 to-orange-200 blur-3xl opacity-50 rounded-full"></div>
+            <img src="https://z-cdn-media.chatglm.cn/files/4bf92a03-22d9-4476-9222-a904fe5fd831.png?auth_key=1883009558-bf687ba3b86d4575abb53278eca209bb-0-4d7cc20e746d22f1f0c093bc4e9933d1" alt="Logotipo de MiPOS" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ¿QUÉ ES MIPOS? ============ -->
+  <section class="py-16 md:py-24 bg-slate-50 border-y border-rose-100">
+    <div class="max-w-4xl mx-auto px-6 text-center reveal">
+      <span class="text-xs font-medium uppercase tracking-widest text-rose-600 mb-4 block">¿Qué es MiPOS?</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-slate-900">Diseñado pensándote a ti</h2>
+      <p class="text-slate-600 text-lg leading-relaxed">
+        MiPOS es un sistema punto de venta diseñado pensándote a ti, que estás construyendo tu negocio en Cuba. Te permite controlar ventas, inventario, caja y productos desde una sola computadora, sin depender del internet y sin complicaciones técnicas.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CARACTERÍSTICAS PRINCIPALES ============ -->
+  <section id="caracteristicas" class="py-24 md:py-32 relative bg-white">
+    <div class="absolute left-0 top-1/2 w-[400px] h-[400px] bg-rose-50 blob blur-[80px] pointer-events-none opacity-70"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <span class="text-xs font-medium uppercase tracking-widest text-rose-600 mb-4 block">Características</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Todo lo que necesitas en un solo lugar</h2>
+        <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Herramientas potentes pero simples de usar para administrar tu negocio.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:scan-barcode" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Punto de Venta Rápido</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Registra ventas al instante con búsqueda por nombre o código de barras. Carrito en tiempo real, cálculo automático de cambio y soporte para múltiples formas de pago.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:package" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Gestión de Productos</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Organiza todo tu catálogo con categorías, precios y control de stock. Edita, crea o elimina productos en segundos.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:warehouse" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Control de Inventario</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Lleva el registro de entradas y salidas de mercancía. Siempre sabrás qué tienes, qué te falta y qué se vende más.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:wallet" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Apertura y Cierre de Caja</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Control total del efectivo por denominaciones. Corte de caja al final del día con trazabilidad completa.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:history" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Historial de Ventas</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Consulta y filtra todas las ventas por fecha, cajero o producto. Nunca más pierdas el control de lo que vendiste.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:layout-dashboard" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Panel de Control</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Mira en tiempo real cómo va tu día: ventas totales, productos más vendidos y rendimiento por hora.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:file-spreadsheet" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Reportes Exportables</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Exporta tus datos a Excel con filtros por fecha y usuario. Ideal para llevar contabilidad o presentar informes.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:users" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Usuarios y Roles</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Define quién puede hacer qué: administrador, cajero, contador o almacenista. Cada uno con su nivel de acceso.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-rose-100 bg-white shadow-rose-soft">
+          <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5">
+            <span class="iconify text-rose-600" data-icon="lucide:wifi-off" data-width="24"></span>
+          </div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">100% Offline</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Funciona completamente sin internet. Tus datos quedan guardados en tu propia computadora, seguros y privados.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ¿POR QUÉ ES DIFERENTE? ============ -->
+  <section class="py-24 md:py-32 relative bg-slate-50 border-y border-rose-100">
+    <div class="absolute right-0 top-1/3 w-[400px] h-[400px] bg-orange-100 blob blur-[80px] pointer-events-none opacity-50"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <span class="text-xs font-medium uppercase tracking-widest text-rose-600 mb-4 block">Ventajas</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">¿Por qué MiPOS es diferente?</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-rose-soft">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-rose-600" data-icon="lucide:map-pin" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Pensado para Cuba</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">No necesita conexión a internet. Funciona con los recursos que tienes disponibles, sin importar las limitaciones de conectividad.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-rose-soft">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-rose-600" data-icon="lucide:download" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Fácil de instalar</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Se instala en minutos en cualquier computadora con Windows. No necesitas ser un experto en tecnología.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-rose-soft">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-rose-600" data-icon="lucide:badge-dollar-sign" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Sin costos mensuales</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Pagas una sola vez y es tuyo para siempre. Sin suscripciones, sin pagos recurrentes, sin sorpresas.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-rose-soft">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-rose-600" data-icon="lucide:shield-check" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Tus datos son tuyos</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Toda tu información se guarda localmente. No dependes de servidores externos ni de terceros.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-rose-soft">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-rose-600" data-icon="lucide:coins" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Adaptado a tu moneda</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Configurado para trabajar con la moneda que necesitas.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-rose-soft">
+          <div class="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-rose-600" data-icon="lucide:monitor-smartphone" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Interfaz moderna</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Diseño profesional, limpio y que se adapta a cualquier pantalla, incluyendo tablets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IDEAL PARA ============ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <span class="text-xs font-medium uppercase tracking-widest text-rose-600 mb-4 block">Ideal para</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-slate-900">Tu negocio es el que importa</h2>
+      <p class="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed mb-12">MiPOS funciona para cualquier emprendimiento cubano que necesite organizarse y profesionalizar sus ventas:</p>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">🛒</span>
+          <span class="text-sm font-medium text-slate-700">Misceláneas y bodegas</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">💊</span>
+          <span class="text-sm font-medium text-slate-700">Farmacias y consultorios</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">👗</span>
+          <span class="text-sm font-medium text-slate-700">Tiendas de ropa y calzado</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">🔧</span>
+          <span class="text-sm font-medium text-slate-700">Ferreterías y talleres</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">☕</span>
+          <span class="text-sm font-medium text-slate-700">Cafeterías y panaderías</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">🍖</span>
+          <span class="text-sm font-medium text-slate-700">Expendios de comida</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">📱</span>
+          <span class="text-sm font-medium text-slate-700">Tiendas de telefonía</span>
+        </div>
+        <div class="reveal p-5 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-rose-50 hover:border-rose-200">
+          <span class="text-3xl">🏪</span>
+          <span class="text-sm font-medium text-slate-700">Cualquier negocio que venda al público</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section id="contacto" class="py-24 md:py-32 relative overflow-hidden bg-rose-50 border-t border-rose-100">
+    <div class="absolute inset-0 bg-gradient-to-b from-rose-50 via-slate-50 to-white pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-100 blob blur-[100px] pointer-events-none opacity-60"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <div class="w-16 h-16 rounded-2xl bg-rose-100 border border-rose-200 flex items-center justify-center mx-auto mb-6">
+        <span class="iconify text-rose-600" data-icon="lucide:rocket" data-width="32"></span>
+      </div>
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Tu negocio merece herramientas profesionales</h2>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+        No importa si estás empezando o ya tienes tu negocio consolidado. MiPOS te da el control que necesitas para tomar mejores decisiones, vender más y crecer con confianza.
+      </p>
+      <p class="text-xl font-semibold text-rose-600 italic mb-10">
+        Porque emprender en Cuba ya es un reto suficiente. El control de tu negocio no debería serlo.
+      </p>
+      <a href="mailto:hola@1869apps.com" class="btn-rose text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">
+        Solicitar Demo
+        <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-white border-t border-rose-100 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto" />
+        <p class="text-xs text-slate-400">© 2025 1869apps. Todos los derechos reservados.</p>
+      </div>
+      <a href="index.html" class="text-sm text-rose-600 hover:text-rose-700 font-medium transition-colors">Volver al inicio</a>
+    </div>
+  </footer>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('menuBtn');
+      const closeMenuBtn = document.getElementById('closeMenu');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      const toggleMenu = (open) => {
+        mobileMenu.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', open);
+      };
+
+      menuBtn.addEventListener('click', () => toggleMenu(true));
+      closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => toggleMenu(false));
+      });
+
+      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.05}s`;
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>
