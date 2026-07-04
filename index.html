@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO Optimizado -->
   <title>1869apps — Desarrollo de Software para Emprendimientos en Cuba</title>
   <meta name="description" content="1869apps: Desarrollo de software a medida, aplicaciones móviles (PWA) y de escritorio para emprendimientos en Cuba. Optimiza y automatiza tu negocio.">
+  
+  <!-- Open Graph / Redes Sociales -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="1869apps — Desarrollo de Software en Cuba">
   <meta property="og:description" content="Aplicaciones móviles y software de escritorio para automatizar tu emprendimiento en Cuba.">
@@ -13,8 +17,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
+  
   <script>
     tailwind.config = {
       theme: {
@@ -24,38 +30,60 @@
             brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
             smart: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
           },
-          animation: { 'float-slow': 'float 6s ease-in-out infinite', 'float-delay': 'float 6s ease-in-out 2s infinite' },
-          keyframes: { float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-15px)' } } }
+          animation: {
+            'float-slow': 'float 6s ease-in-out infinite',
+            'float-delay': 'float 6s ease-in-out 2s infinite',
+          },
+          keyframes: {
+            float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-15px)' } }
+          }
         }
       }
     }
   </script>
+  
   <style>
     body { background-color: #ffffff; }
     ::selection { background: rgba(37,99,235,0.15); color: #1e3a8a; }
+    
     .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
     .shadow-blue-soft { box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15); }
+    
     .card-hover { transition: transform 400ms, box-shadow 400ms, border-color 400ms, opacity 600ms; will-change: transform, opacity; }
     .card-hover:hover { transform: translateY(-0.5rem); border-color: rgba(59,130,246,0.4); box-shadow: 0 20px 50px -15px rgba(59,130,246,0.2); }
+    
     .reveal { opacity: 0; transform: translateY(20px); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
     .gradient-text-hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    
     @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; } }
     .blob { animation: morph 8s ease-in-out infinite; }
+    
     .btn-primary { background: linear-gradient(135deg, #2563eb, #4f46e5); box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.3s ease; }
     .btn-primary:hover { box-shadow: 0 8px 25px rgba(37,99,235,0.4); background: linear-gradient(135deg, #1d4ed8, #4338ca); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    
     .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
     .mobile-menu.open { transform: translateX(0); }
+    
     .mockup-container { display: flex; justify-content: center; align-items: center; gap: 2rem; position: relative; z-index: 10; flex-wrap: wrap; }
     .mockup-phone { width: 150px; height: 300px; background: #0f172a; border-radius: 1.5rem; padding: 0.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border: 4px solid #1e293b; }
     .mockup-screen { width: 100%; height: 100%; border-radius: 1.2rem; overflow: hidden; position: relative; display: flex; flex-direction: column; }
     .mockup-window { width: 300px; height: 190px; background: #ffffff; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; overflow: hidden; display: flex; flex-direction: column; }
-    @media (max-width: 768px) { .mockup-container { flex-direction: column; gap: 3rem; } .mockup-window { width: 90%; max-width: 300px; order: -1; } }
+    
+    @media (max-width: 768px) {
+      .mockup-container { flex-direction: column; gap: 3rem; }
+      .mockup-window { width: 90%; max-width: 300px; order: -1; }
+    }
+
     .bg-pattern { background-image: radial-gradient(#3b82f6 0.5px, transparent 0.5px); background-size: 10px 10px; opacity: 0.1; }
+
   </style>
 </head>
 <body class="text-slate-800 font-sans antialiased overflow-x-hidden">
 
+  <!-- ============ NAVBAR ============ -->
   <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-blue-100 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3" aria-label="Inicio 1869apps">
@@ -91,95 +119,177 @@
     </div>
   </nav>
 
+  <!-- ============ HERO ============ -->
   <section id="inicio" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-white">
     <div class="absolute top-10 left-10 w-[600px] h-[600px] bg-blue-100 blob blur-[100px] pointer-events-none opacity-60"></div>
     <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-100 blob blur-[100px] pointer-events-none opacity-50" style="animation-delay: 4s;"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-50 rounded-full blur-[120px] pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center max-w-3xl mx-auto mb-20">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-200 bg-blue-50 mb-8 shadow-sm">
-          <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          </span>
           <span class="text-xs font-medium text-blue-700">Apps Móviles (PWA) • Software de Escritorio • Soluciones Inteligentes</span>
         </div>
+
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-slate-900">
           <span class="gradient-text-hero">Tecnología a tu medida</span><br/>
           <span class="text-blue-600">para emprendimientos en Cuba</span>
         </h1>
+
         <p class="text-lg md:text-xl text-slate-500 leading-relaxed mx-auto mb-10">
           En <strong class="text-blue-700">1869apps</strong> desarrollamos aplicaciones móviles multiplataforma y software de escritorio que optimizan y automatizan tu negocio. La alternativa ideal de desarrollo tecnológico para impulsar el crecimiento de los emprendimientos en Cuba.
         </p>
+
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="#apps" class="btn-primary text-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 transition-all duration-300">
-            Ver nuestros proyectos <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            Ver nuestros proyectos
+            <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
           </a>
           <a href="#contacto" class="border border-blue-200 text-blue-700 bg-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 hover:border-blue-400 hover:bg-blue-50 transition-all duration-300">
             Contáctanos
           </a>
         </div>
       </div>
+
+      <!-- Prediseño Visual de Presentación (Mockup) -->
       <div class="relative mt-10">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-40 rounded-full pointer-events-none"></div>
+        
         <div class="mockup-container py-10">
+          
+          <!-- 1. Mockup Móvil (PWA) -->
           <div class="mockup-phone animate-float-slow transform md:rotate-[-6deg] hover:rotate-0 transition-transform duration-500 relative">
             <div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-slate-900 rounded-b-2xl z-20"></div>
             <div class="mockup-screen bg-slate-50">
-              <div class="bg-blue-600 h-16 flex items-end p-3"><div class="w-8 h-8 bg-white/30 rounded-lg backdrop-blur flex items-center justify-center"><span class="iconify text-white" data-icon="lucide:user" data-width="16"></span></div></div>
+              <div class="bg-blue-600 h-16 flex items-end p-3">
+                <div class="w-8 h-8 bg-white/30 rounded-lg backdrop-blur flex items-center justify-center">
+                  <span class="iconify text-white" data-icon="lucide:user" data-width="16"></span>
+                </div>
+              </div>
               <div class="p-3 flex-1 space-y-2">
-                <div class="w-3/4 h-2 bg-slate-300 rounded"></div><div class="w-full h-2 bg-slate-200 rounded"></div><div class="w-5/6 h-2 bg-slate-200 rounded"></div>
-                <div class="mt-3 h-16 bg-blue-50 rounded-xl border border-blue-100 flex items-center justify-center"><span class="iconify text-blue-400" data-icon="lucide:bar-chart-3" data-width="24"></span></div>
-                <div class="w-full h-8 bg-slate-100 rounded flex items-center px-2 gap-1"><div class="w-3 h-3 bg-green-400 rounded-full"></div><div class="w-12 h-1.5 bg-slate-300 rounded"></div></div>
+                <div class="w-3/4 h-2 bg-slate-300 rounded"></div>
+                <div class="w-full h-2 bg-slate-200 rounded"></div>
+                <div class="w-5/6 h-2 bg-slate-200 rounded"></div>
+                <div class="mt-3 h-16 bg-blue-50 rounded-xl border border-blue-100 flex items-center justify-center">
+                   <span class="iconify text-blue-400" data-icon="lucide:bar-chart-3" data-width="24"></span>
+                </div>
+                <div class="w-full h-8 bg-slate-100 rounded flex items-center px-2 gap-1">
+                  <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                  <div class="w-12 h-1.5 bg-slate-300 rounded"></div>
+                </div>
               </div>
             </div>
-            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-4 py-1.5 rounded-full font-medium shadow-lg flex items-center gap-1.5 whitespace-nowrap z-30"><span class="iconify text-green-400" data-icon="mdi:cellphone" data-width="12"></span> App Móvil (PWA)</div>
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-4 py-1.5 rounded-full font-medium shadow-lg flex items-center gap-1.5 whitespace-nowrap z-30">
+              <span class="iconify text-green-400" data-icon="mdi:cellphone" data-width="12"></span> App Móvil (PWA)
+            </div>
           </div>
+
+          <!-- 2. Mockup Escritorio -->
           <div class="mockup-window animate-float-delay transform hover:scale-105 transition-transform duration-500 relative z-20">
             <div class="h-8 bg-slate-100 flex items-center justify-between px-3 border-b border-slate-200">
-              <div class="flex gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-red-400"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div><div class="w-2.5 h-2.5 rounded-full bg-green-400"></div></div>
-              <div class="flex items-center gap-1 text-slate-400"><span class="iconify" data-icon="mdi:monitor" data-width="12"></span><span class="text-[10px] font-medium">Desktop App</span></div>
+              <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+              </div>
+              <div class="flex items-center gap-1 text-slate-400">
+                <span class="iconify" data-icon="mdi:monitor" data-width="12"></span>
+                <span class="text-[10px] font-medium">Desktop App</span>
+              </div>
               <div class="w-8"></div>
             </div>
             <div class="p-4 flex-1 flex flex-col">
-              <div class="flex items-center gap-2 mb-4"><div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center shadow"><span class="iconify text-white" data-icon="lucide:layout-dashboard" data-width="16"></span></div><div><div class="w-24 h-2 bg-slate-400 rounded"></div><div class="w-16 h-1.5 bg-slate-300 rounded mt-1"></div></div></div>
+              <div class="flex items-center gap-2 mb-4">
+                <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center shadow">
+                  <span class="iconify text-white" data-icon="lucide:layout-dashboard" data-width="16"></span>
+                </div>
+                <div>
+                  <div class="w-24 h-2 bg-slate-400 rounded"></div>
+                  <div class="w-16 h-1.5 bg-slate-300 rounded mt-1"></div>
+                </div>
+              </div>
               <div class="grid grid-cols-3 gap-2 flex-1">
-                <div class="bg-blue-50 rounded-lg p-2 flex flex-col justify-end border border-blue-100"><div class="w-full h-1 bg-blue-300 rounded mb-1"></div><div class="w-2/3 h-1 bg-blue-400 rounded"></div></div>
-                <div class="bg-indigo-50 rounded-lg p-2 flex flex-col justify-end border border-indigo-100"><div class="w-full h-1 bg-indigo-300 rounded mb-1"></div><div class="w-1/2 h-1 bg-indigo-400 rounded"></div></div>
-                <div class="bg-slate-50 rounded-lg p-2 flex flex-col justify-end border border-slate-200"><div class="w-full h-1 bg-slate-300 rounded mb-1"></div><div class="w-3/4 h-1 bg-slate-400 rounded"></div></div>
+                <div class="bg-blue-50 rounded-lg p-2 flex flex-col justify-end border border-blue-100">
+                  <div class="w-full h-1 bg-blue-300 rounded mb-1"></div>
+                  <div class="w-2/3 h-1 bg-blue-400 rounded"></div>
+                </div>
+                <div class="bg-indigo-50 rounded-lg p-2 flex flex-col justify-end border border-indigo-100">
+                  <div class="w-full h-1 bg-indigo-300 rounded mb-1"></div>
+                  <div class="w-1/2 h-1 bg-indigo-400 rounded"></div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2 flex flex-col justify-end border border-slate-200">
+                  <div class="w-full h-1 bg-slate-300 rounded mb-1"></div>
+                  <div class="w-3/4 h-1 bg-slate-400 rounded"></div>
+                </div>
               </div>
             </div>
-            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-4 py-1.5 rounded-full font-medium shadow-lg flex items-center gap-1.5 whitespace-nowrap z-30"><span class="iconify text-blue-400" data-icon="mdi:monitor" data-width="12"></span> Software de Escritorio</div>
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-4 py-1.5 rounded-full font-medium shadow-lg flex items-center gap-1.5 whitespace-nowrap z-30">
+              <span class="iconify text-blue-400" data-icon="mdi:monitor" data-width="12"></span> Software de Escritorio
+            </div>
           </div>
+
+          <!-- 3. Mockup Automatización Inteligente -->
           <div class="mockup-phone animate-float-slow transform md:rotate-[6deg] hover:rotate-0 transition-transform duration-500 relative">
             <div class="mockup-screen bg-indigo-50 items-center p-3">
               <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-24 bg-indigo-500 rounded-full blur-2xl opacity-20"></div>
-              <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl flex items-center justify-center mt-4 shadow-lg shadow-indigo-500/40 relative z-10"><span class="iconify text-white animate-pulse" data-icon="lucide:zap" data-width="28"></span></div>
+              <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl flex items-center justify-center mt-4 shadow-lg shadow-indigo-500/40 relative z-10">
+                <span class="iconify text-white animate-pulse" data-icon="lucide:zap" data-width="28"></span>
+              </div>
               <div class="w-full mt-4 space-y-2 relative z-10">
-                <div class="flex justify-start"><div class="max-w-[80%] w-20 h-6 bg-white rounded-lg rounded-tl-none shadow-sm flex items-center px-2"><div class="w-10 h-1.5 bg-slate-200 rounded"></div></div></div>
-                <div class="flex justify-end"><div class="max-w-[80%] w-16 h-6 bg-indigo-500 rounded-lg rounded-tr-none shadow-sm flex items-center justify-end px-2"><div class="w-6 h-1.5 bg-white/70 rounded"></div></div></div>
-                <div class="flex justify-start"><div class="max-w-[80%] w-24 h-6 bg-white rounded-lg rounded-tl-none shadow-sm flex items-center px-2"><div class="w-12 h-1.5 bg-indigo-300 rounded"></div></div></div>
+                <div class="flex justify-start">
+                  <div class="max-w-[80%] w-20 h-6 bg-white rounded-lg rounded-tl-none shadow-sm flex items-center px-2">
+                    <div class="w-10 h-1.5 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+                <div class="flex justify-end">
+                  <div class="max-w-[80%] w-16 h-6 bg-indigo-500 rounded-lg rounded-tr-none shadow-sm flex items-center justify-end px-2">
+                    <div class="w-6 h-1.5 bg-white/70 rounded"></div>
+                  </div>
+                </div>
+                <div class="flex justify-start">
+                  <div class="max-w-[80%] w-24 h-6 bg-white rounded-lg rounded-tl-none shadow-sm flex items-center px-2">
+                    <div class="w-12 h-1.5 bg-indigo-300 rounded"></div>
+                  </div>
+                </div>
               </div>
               <div class="absolute bottom-3 left-3 right-3 h-8 bg-white rounded-full shadow-sm flex items-center px-3 gap-2">
-                <div class="w-4 h-4 bg-indigo-100 rounded-full flex items-center justify-center"><span class="iconify text-indigo-500" data-icon="lucide:sparkles" data-width="8"></span></div>
+                <div class="w-4 h-4 bg-indigo-100 rounded-full flex items-center justify-center">
+                  <span class="iconify text-indigo-500" data-icon="lucide:sparkles" data-width="8"></span>
+                </div>
                 <div class="w-12 h-1.5 bg-slate-200 rounded"></div>
-                <div class="ml-auto w-4 h-4 bg-indigo-500 rounded-full flex items-center justify-center"><span class="iconify text-white" data-icon="lucide:send" data-width="8"></span></div>
+                <div class="ml-auto w-4 h-4 bg-indigo-500 rounded-full flex items-center justify-center">
+                  <span class="iconify text-white" data-icon="lucide:send" data-width="8"></span>
+                </div>
               </div>
             </div>
-            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-4 py-1.5 rounded-full font-medium shadow-lg flex items-center gap-1.5 whitespace-nowrap z-30"><span class="iconify text-violet-400" data-icon="lucide:sparkles" data-width="12"></span> Automatización Inteligente</div>
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-4 py-1.5 rounded-full font-medium shadow-lg flex items-center gap-1.5 whitespace-nowrap z-30">
+              <span class="iconify text-violet-400" data-icon="lucide:sparkles" data-width="12"></span> Automatización Inteligente
+            </div>
           </div>
+
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============ APPS DESARROLLADAS ============ -->
   <section id="apps" class="py-24 md:py-32 relative bg-slate-50 border-y border-blue-100">
     <div class="absolute right-0 top-1/3 w-[400px] h-[400px] bg-teal-100 blob blur-[80px] pointer-events-none opacity-50"></div>
+
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
         <span class="text-xs font-medium uppercase tracking-widest text-blue-600 mb-4 block">Portfolio</span>
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Proyectos que transforman negocios en Cuba</h2>
         <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Soluciones robustas y multiplataforma diseñadas para optimizar operaciones complejas y adaptarse a las necesidades locales.</p>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
+        <!-- Tarjeta GERUCO -->
         <article class="card-hover reveal rounded-2xl border border-blue-100 bg-white overflow-hidden group shadow-blue-soft flex flex-col">
           <div class="relative h-52 bg-gradient-to-br from-teal-50 via-sky-50 to-blue-50 flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 bg-pattern"></div>
@@ -200,6 +310,7 @@
           </div>
         </article>
 
+        <!-- Tarjeta CreaCosto -->
         <article class="card-hover reveal rounded-2xl border border-blue-100 bg-white overflow-hidden group shadow-blue-soft flex flex-col">
           <div class="relative h-52 bg-gradient-to-br from-emerald-50 via-green-50 to-lime-50 flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 bg-pattern"></div>
@@ -220,6 +331,7 @@
           </div>
         </article>
 
+        <!-- Tarjeta MiPOS -->
         <article class="card-hover reveal rounded-2xl border border-blue-100 bg-white overflow-hidden group shadow-blue-soft flex flex-col">
           <div class="relative h-52 bg-gradient-to-br from-rose-50 via-red-50 to-orange-50 flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 bg-pattern"></div>
@@ -240,18 +352,43 @@
           </div>
         </article>
 
+        <!-- Tarjeta Constructor APK -->
+        <article class="card-hover reveal rounded-2xl border border-blue-100 bg-white overflow-hidden group shadow-blue-soft flex flex-col">
+          <div class="relative h-52 bg-gradient-to-br from-lime-50 via-green-50 to-emerald-50 flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-pattern"></div>
+            <img src="https://z-cdn-media.chatglm.cn/files/c44fe536-81cc-4d62-8e30-e4479baf6de4.png?auth_key=1883200531-ac64abb85e3347439e92c9fbeab8e105-0-cda753e8d07f64ff736bdc09e840b04d" alt="Logotipo de Constructor APK" class="w-24 h-24 object-contain drop-shadow-xl rounded-2xl relative z-10" loading="lazy" />
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-lime-100 flex items-center justify-center"><span class="iconify text-lime-600" data-icon="lucide:wrench" data-width="20"></span></div>
+              <div><h3 class="text-lg font-bold text-slate-900">Constructor APK</h3><span class="text-xs text-lime-600 font-semibold uppercase tracking-wider">Generador de Apps Android</span></div>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1">Herramienta web que permite convertir cualquier sitio web o HTML en una aplicación Android lista para distribuir, sin necesidad de instalar Android Studio ni escribir código nativo. Personaliza iconos, colores, permisos, navegación y comportamiento offline. Genera un ZIP PWA o proyecto Android Studio estructurado con un solo clic.</p>
+            <div class="flex items-center gap-2 flex-wrap mt-auto pt-4 border-t border-slate-100 mb-4">
+              <span class="text-[10px] px-2.5 py-1 rounded-full bg-lime-50 text-lime-700 border border-lime-100 font-medium">Herramienta Web</span>
+              <span class="text-[10px] px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 font-medium">Generador APK</span>
+              <span class="text-[10px] px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 font-medium">PWA</span>
+              <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 font-medium">No-Code</span>
+            </div>
+            <a href="constructor-apk.html" class="group/link inline-flex items-center gap-2 text-sm font-semibold text-lime-600 hover:text-lime-700 transition-colors">Leer más <span class="iconify transition-transform group-hover/link:translate-x-1" data-icon="lucide:arrow-right" data-width="16"></span></a>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
 
+  <!-- ============ PROCESO ============ -->
   <section class="py-24 md:py-32 relative bg-white">
     <div class="absolute left-0 top-1/2 w-[400px] h-[400px] bg-blue-50 blob blur-[80px] pointer-events-none opacity-70"></div>
+
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
         <span class="text-xs font-medium uppercase tracking-widest text-blue-600 mb-4 block">Proceso</span>
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Cómo trabajamos</h2>
         <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Un proceso claro y transparente, utilizando herramientas avanzadas en cada etapa para entregar productos superiores adaptados a la realidad cubana.</p>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div class="reveal card-hover relative p-8 rounded-2xl border border-blue-100 bg-white text-center shadow-blue-soft">
           <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-[11px] font-bold text-white shadow-lg shadow-blue-500/30">1</div>
@@ -281,15 +418,19 @@
     </div>
   </section>
 
+  <!-- ============ TESTIMONIOS ============ -->
   <section id="testimonios" class="py-24 md:py-32 relative bg-slate-50 border-y border-blue-100">
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-100 blob blur-[100px] pointer-events-none opacity-40"></div>
+
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
         <span class="text-xs font-medium uppercase tracking-widest text-blue-600 mb-4 block">Testimonios</span>
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Emprendedores que confían en nosotros</h2>
         <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Nuestra mejor carta de presentación es el éxito de los negocios cubanos que trabajan con nosotros.</p>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
         <article class="reveal card-hover rounded-2xl border border-blue-100 bg-white p-6 md:p-8 flex flex-col shadow-blue-soft">
           <div class="flex items-center gap-1 mb-4" aria-label="5 de 5 estrellas">
             <span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span>
@@ -300,6 +441,7 @@
             <div><div class="text-sm font-semibold text-slate-900">Carlos Mendoza</div><div class="text-xs text-blue-600 font-medium">Emprendedor, La Habana</div></div>
           </div>
         </article>
+
         <article class="reveal card-hover rounded-2xl border border-blue-100 bg-white p-6 md:p-8 flex flex-col shadow-blue-soft">
           <div class="flex items-center gap-1 mb-4" aria-label="5 de 5 estrellas">
             <span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span>
@@ -310,6 +452,7 @@
             <div><div class="text-sm font-semibold text-slate-900">Lucía Rodríguez</div><div class="text-xs text-blue-600 font-medium">Contadora, Santiago de Cuba</div></div>
           </div>
         </article>
+
         <article class="reveal card-hover rounded-2xl border border-blue-100 bg-white p-6 md:p-8 flex flex-col shadow-blue-soft">
           <div class="flex items-center gap-1 mb-4" aria-label="5 de 5 estrellas">
             <span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span><span class="iconify text-yellow-400" data-icon="lucide:star" data-width="18"></span>
@@ -320,14 +463,18 @@
             <div><div class="text-sm font-semibold text-slate-900">Andrea Vargas</div><div class="text-xs text-blue-600 font-medium">Directora, Santa Clara</div></div>
           </div>
         </article>
+
       </div>
     </div>
   </section>
 
+  <!-- ============ CONTACTO ============ -->
   <section id="contacto" class="py-24 md:py-32 relative bg-white">
     <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-100 blob blur-[100px] pointer-events-none opacity-50"></div>
+
     <div class="max-w-6xl mx-auto px-6 relative z-10">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+
         <div>
           <span class="text-xs font-medium uppercase tracking-widest text-blue-600 mb-4 block">Contacto</span>
           <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">¿Tienes una idea<br/>para tu emprendimiento?</h2>
@@ -356,6 +503,7 @@
             </div>
           </div>
         </div>
+
         <div class="flex items-center justify-center">
           <div class="reveal card-hover rounded-2xl border border-blue-100 bg-white p-8 md:p-10 shadow-blue-soft w-full max-w-md">
             <div class="text-center mb-8">
@@ -375,10 +523,12 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
+  <!-- ============ FOOTER ============ -->
   <footer class="bg-white border-t border-blue-100 py-12">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
