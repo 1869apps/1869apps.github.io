@@ -3,420 +3,225 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CreaCosto — Sistema de Gestión de Fichas de Costos | 1869apps</title>
-  <meta name="description" content="CreaCosto: Sistema web para automatizar fichas de costos conforme a la Resolución 148/2023 de Cuba. Cálculos precisos, multi-empresa y 100% offline.">
-
+  <title>GERUCO — Sistema de Gestión de Combustible | 1869apps</title>
+  <meta name="description" content="GERUCO: Sistema web para automatizar el control de combustible de tu flota. Cálculos automáticos, validaciones inteligentes y reportes profesionales.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
-  
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' }
-          }
+          colors: { brand: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' } }
         }
       }
     }
   </script>
-  
   <style>
     body { background-color: #ffffff; }
-    ::selection { background: rgba(5,150,105,0.15); color: #064e3b; }
-    
+    ::selection { background: rgba(13,148,136,0.15); color: #134e4a; }
     .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-    .shadow-emerald-soft { box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.15); }
-    
+    .shadow-teal-soft { box-shadow: 0 10px 40px -10px rgba(20, 184, 166, 0.15); }
     .card-hover { transition: transform 400ms, box-shadow 400ms, border-color 400ms, opacity 600ms; will-change: transform, opacity; }
-    .card-hover:hover { transform: translateY(-0.5rem); border-color: rgba(16,185,129,0.4); box-shadow: 0 20px 50px -15px rgba(16,185,129,0.2); }
-    
+    .card-hover:hover { transform: translateY(-0.5rem); border-color: rgba(20,184,166,0.4); box-shadow: 0 20px 50px -15px rgba(20,184,166,0.2); }
     .reveal { opacity: 0; transform: translateY(20px); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-    .gradient-text-emerald { background: linear-gradient(135deg, #047857 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    
+    .gradient-text-teal { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; } }
     .blob { animation: morph 8s ease-in-out infinite; }
-    
-    .btn-primary { background: linear-gradient(135deg, #2563eb, #4f46e5); box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.3s ease; }
-    .btn-primary:hover { box-shadow: 0 8px 25px rgba(37,99,235,0.4); background: linear-gradient(135deg, #1d4ed8, #4338ca); transform: translateY(-1px); }
-    
-    .btn-emerald { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 4px 15px rgba(5,150,105,0.3); transition: all 0.3s ease; }
-    .btn-emerald:hover { box-shadow: 0 8px 25px rgba(5,150,105,0.4); background: linear-gradient(135deg, #047857, #059669); transform: translateY(-1px); }
-    
+    .btn-teal { background: linear-gradient(135deg, #0d9488, #14b8a6); box-shadow: 0 4px 15px rgba(13,148,136,0.3); transition: all 0.3s ease; }
+    .btn-teal:hover { box-shadow: 0 8px 25px rgba(13,148,136,0.4); background: linear-gradient(135deg, #0f766e, #0d9488); transform: translateY(-1px); }
     .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
     .mobile-menu.open { transform: translateX(0); }
   </style>
 </head>
 <body class="text-slate-800 font-sans antialiased overflow-x-hidden">
-
-  <!-- ============ NAVBAR ============ -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-emerald-100 shadow-sm">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-teal-100 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-3" aria-label="Inicio 1869apps">
         <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto object-contain" />
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="index.html#inicio" class="text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-150 font-medium">Inicio</a>
-        <a href="index.html#apps" class="text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-150 font-medium">Proyectos</a>
-        <a href="index.html#testimonios" class="text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-150 font-medium">Testimonios</a>
-        <a href="index.html#contacto" class="text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-150 font-medium">Contacto</a>
+        <a href="index.html#inicio" class="text-sm text-slate-600 hover:text-teal-600 transition-colors duration-150 font-medium">Inicio</a>
+        <a href="index.html#apps" class="text-sm text-slate-600 hover:text-teal-600 transition-colors duration-150 font-medium">Proyectos</a>
+        <a href="index.html#testimonios" class="text-sm text-slate-600 hover:text-teal-600 transition-colors duration-150 font-medium">Testimonios</a>
+        <a href="index.html#contacto" class="text-sm text-slate-600 hover:text-teal-600 transition-colors duration-150 font-medium">Contacto</a>
       </div>
       <div class="hidden md:flex items-center gap-4">
-        <a href="index.html#contacto" class="btn-emerald text-white text-xs font-medium h-10 px-6 rounded-full flex items-center transition-all duration-300">Hablemos</a>
+        <a href="index.html#contacto" class="btn-teal text-white text-xs font-medium h-10 px-6 rounded-full flex items-center transition-all duration-300">Hablemos</a>
       </div>
-      <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden text-slate-600 hover:text-emerald-600 transition-colors">
+      <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden text-slate-600 hover:text-teal-600 transition-colors">
         <span class="iconify" data-icon="lucide:menu" data-width="24"></span>
       </button>
     </div>
-    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-white border-l border-emerald-100 p-6 md:hidden z-50 shadow-2xl">
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-white border-l border-teal-100 p-6 md:hidden z-50 shadow-2xl">
       <div class="flex justify-between items-center mb-10">
         <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-8 w-auto" />
-        <button id="closeMenu" aria-label="Cerrar menú" class="text-slate-500 hover:text-emerald-600">
-          <span class="iconify" data-icon="lucide:x" data-width="24"></span>
-        </button>
+        <button id="closeMenu" aria-label="Cerrar menú" class="text-slate-500 hover:text-teal-600"><span class="iconify" data-icon="lucide:x" data-width="24"></span></button>
       </div>
       <div class="flex flex-col gap-6">
-        <a href="index.html#inicio" class="text-slate-700 hover:text-emerald-600 transition-colors mobile-link font-medium">Inicio</a>
-        <a href="index.html#apps" class="text-slate-700 hover:text-emerald-600 transition-colors mobile-link font-medium">Proyectos</a>
-        <a href="index.html#testimonios" class="text-slate-700 hover:text-emerald-600 transition-colors mobile-link font-medium">Testimonios</a>
-        <a href="index.html#contacto" class="text-slate-700 hover:text-emerald-600 transition-colors mobile-link font-medium">Contacto</a>
+        <a href="index.html#inicio" class="text-slate-700 hover:text-teal-600 transition-colors mobile-link font-medium">Inicio</a>
+        <a href="index.html#apps" class="text-slate-700 hover:text-teal-600 transition-colors mobile-link font-medium">Proyectos</a>
+        <a href="index.html#testimonios" class="text-slate-700 hover:text-teal-600 transition-colors mobile-link font-medium">Testimonios</a>
+        <a href="index.html#contacto" class="text-slate-700 hover:text-teal-600 transition-colors mobile-link font-medium">Contacto</a>
       </div>
     </div>
   </nav>
 
-  <!-- ============ HERO CreaCosto ============ -->
   <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-white">
-    <div class="absolute top-10 left-10 w-[600px] h-[600px] bg-emerald-100 blob blur-[100px] pointer-events-none opacity-60"></div>
-    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-lime-100 blob blur-[100px] pointer-events-none opacity-50" style="animation-delay: 4s;"></div>
-
+    <div class="absolute top-10 left-10 w-[600px] h-[600px] bg-teal-100 blob blur-[100px] pointer-events-none opacity-60"></div>
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-sky-100 blob blur-[100px] pointer-events-none opacity-50" style="animation-delay: 4s;"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
         <div class="text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-200 bg-emerald-50 mb-6 shadow-sm">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span class="text-xs font-medium text-emerald-700">Resolución 148/2023 • 100% Offline • Multi-empresa</span>
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-200 bg-teal-50 mb-6 shadow-sm">
+            <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span></span>
+            <span class="text-xs font-medium text-teal-700">Cálculos Automáticos • Multiplataforma • Control Total</span>
           </div>
-
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6 text-slate-900">
-            <span class="gradient-text-emerald">CreaCosto</span><br/>
-            <span class="text-slate-800 text-3xl md:text-4xl">Sistema de Gestión de Fichas de Costos</span>
+            <span class="gradient-text-teal">GERUCO</span><br/>
+            <span class="text-slate-800 text-3xl md:text-4xl">Sistema de Gestión de Combustible</span>
           </h1>
-
-          <p class="text-lg md:text-xl text-slate-500 leading-relaxed mx-auto lg:mx-0 mb-10 max-w-xl">
-            Dirigido a emprendedores, TCP y MIPYMES que necesitan calcular precios justos, defenderlos ante la fiscalización y mantener un control riguroso de su estructura de costos operativa.
-          </p>
-
+          <p class="text-lg md:text-xl text-slate-500 leading-relaxed mx-auto lg:mx-0 mb-10 max-w-xl">La solución definitiva para controlar el combustible de tu flota vehicular. Automatiza cálculos, valida inteligentemente y genera reportes profesionales desde cualquier dispositivo.</p>
           <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-            <a href="#contacto" class="btn-emerald text-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 transition-all duration-300">
-              Solicitar Demo
-              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
-            </a>
-            <a href="#caracteristicas" class="border border-emerald-200 text-emerald-700 bg-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 hover:border-emerald-400 hover:bg-emerald-50 transition-all duration-300">
-              Ver características
-            </a>
+            <a href="#contacto" class="btn-teal text-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 transition-all duration-300">Solicitar Demo <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span></a>
+            <a href="#caracteristicas" class="border border-teal-200 text-teal-700 bg-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 hover:border-teal-400 hover:bg-teal-50 transition-all duration-300">Ver características</a>
           </div>
         </div>
-
         <div class="flex justify-center lg:justify-end">
           <div class="relative">
-            <div class="absolute inset-0 bg-gradient-to-tr from-emerald-200 to-lime-200 blur-3xl opacity-50 rounded-full"></div>
-            <img src="https://z-cdn-media.chatglm.cn/files/a1053a1a-fc22-4100-9309-d4d82f195414.png?auth_key=1882586405-636f9eb093cc4cb19e8a2c49c0b4f898-0-dd6f0ae46624ef725701fa73f660be87" alt="Logotipo de CreaCosto" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
+            <div class="absolute inset-0 bg-gradient-to-tr from-teal-200 to-sky-200 blur-3xl opacity-50 rounded-full"></div>
+            <img src="https://z-cdn-media.chatglm.cn/files/f8c5d09e-67d2-4d00-8f21-68b73b697055.png?auth_key=1881976044-fbccfe704d074656bb1de7a7ded3be55-0-cc0fc74c143b870a122e95d62aed444b" alt="Logotipo de GERUCO" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ ¿QUÉ ES CreaCosto? ============ -->
-  <section class="py-16 md:py-24 bg-slate-50 border-y border-emerald-100">
+  <section class="py-16 md:py-24 bg-slate-50 border-y border-teal-100">
     <div class="max-w-4xl mx-auto px-6 text-center reveal">
-      <span class="text-xs font-medium uppercase tracking-widest text-emerald-600 mb-4 block">Descripción del Producto</span>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-slate-900">Cumplimiento normativo garantizado</h2>
-      <p class="text-slate-600 text-lg leading-relaxed">
-        CreaCosto es un sistema web profesional diseñado para automatizar la elaboración de fichas de costos y gastos de productos y servicios, conforme a la Metodología establecida en la Resolución 148/2023 del Ministerio de Finanzas y Precios de Cuba.
-      </p>
+      <span class="text-xs font-medium uppercase tracking-widest text-teal-600 mb-4 block">Descripción del Producto</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-slate-900">Adiós al Excel manual</h2>
+      <p class="text-slate-600 text-lg leading-relaxed">GERUCO es un sistema web profesional que automatiza por completo el control de combustible de tu flota de vehículos. Diseñado para reemplazar el Excel manual con cálculos automáticos, validaciones inteligentes y reportes profesionales — todo en una interfaz moderna y accesible desde cualquier dispositivo.</p>
     </div>
   </section>
 
-  <!-- ============ CARACTERÍSTICAS PRINCIPALES ============ -->
   <section id="caracteristicas" class="py-24 md:py-32 relative bg-white">
-    <div class="absolute left-0 top-1/2 w-[400px] h-[400px] bg-emerald-50 blob blur-[80px] pointer-events-none opacity-70"></div>
-
+    <div class="absolute left-0 top-1/2 w-[400px] h-[400px] bg-teal-50 blob blur-[80px] pointer-events-none opacity-70"></div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
-        <span class="text-xs font-medium uppercase tracking-widest text-emerald-600 mb-4 block">Características Principales</span>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Automatización y Control Total</h2>
+        <span class="text-xs font-medium uppercase tracking-widest text-teal-600 mb-4 block">Ventajas Principales</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">¿Por qué GERUCO?</h2>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-emerald-100 bg-white shadow-emerald-soft">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5">
-            <span class="iconify text-emerald-600" data-icon="lucide:file-text" data-width="24"></span>
-          </div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Elaboración Automática de Fichas</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Modelo oficial de 16 filas (Anexo I). Cálculo automático de gastos tributarios, validación de coeficientes máximos (Art. 9) y control de tasas de utilidad (Anexo II).</p>
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-teal-100 bg-white shadow-teal-soft">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center mb-5"><span class="iconify text-teal-600" data-icon="lucide:zap" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Cálculos 100% automáticos</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Olvídate de errores manuales. Cálculo automático de km recorridos, combustible consumido, disponible en tanque, pistas secuenciales con reinicio mensual y columna P de la hoja de ruta. Todo en tiempo real.</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-emerald-100 bg-white shadow-emerald-soft">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5">
-            <span class="iconify text-emerald-600" data-icon="lucide:building-2" data-width="24"></span>
-          </div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Gestión Multi-Empresa</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Administra varias empresas o prestadores desde una sola interfaz. Cada empresa mantiene su propia información fiscal, representante legal y tipo de actividad.</p>
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-teal-100 bg-white shadow-teal-soft">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center mb-5"><span class="iconify text-teal-600" data-icon="lucide:shield-alert" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Control y validación inteligente</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Alerta visual de sobregiro (cuadro rojo), alerta de combustible agotado (ámbar), restricción por roles (operadores vs auditores) y trazabilidad completa de cada registro.</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-emerald-100 bg-white shadow-emerald-soft">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5">
-            <span class="iconify text-emerald-600" data-icon="lucide:lock" data-width="24"></span>
-          </div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Autenticación con Roles</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Rol Administrador y Rol Usuario. Aislamiento de datos por usuario para garantizar la privacidad. Sesiones seguras con tokens JWT.</p>
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-teal-100 bg-white shadow-teal-soft">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center mb-5"><span class="iconify text-teal-600" data-icon="lucide:bar-chart-3" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Dashboard en tiempo real</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">KPIs al instante: total de km, combustible abastecido/consumido, rendimiento (km/L), servicios, gráficos mensuales/diarios, top rutas y servicios recientes.</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-emerald-100 bg-white shadow-emerald-soft">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5">
-            <span class="iconify text-emerald-600" data-icon="lucide:users" data-width="24"></span>
-          </div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Panel de Administración</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Crear, editar, activar/desactivar usuarios. Restablecer contraseñas con un clic y visualizar empresas y fichas creadas por cada usuario.</p>
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-teal-100 bg-white shadow-teal-soft">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center mb-5"><span class="iconify text-teal-600" data-icon="lucide:file-text" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Reportes profesionales</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Exportación a Excel (.xlsx) y PDF con diseño elegante: encabezado con logo, datos del vehículo, KPIs, tablas detalladas con filas alternadas, pista 1 virtual y pie de reporte.</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-emerald-100 bg-white shadow-emerald-soft">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5">
-            <span class="iconify text-emerald-600" data-icon="lucide:database" data-width="24"></span>
-          </div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Copias de Seguridad (Backup)</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Backup manual o automático configurable (diario/semanal). Restauración con protección pre-restore. Los backups se guardan fuera del proyecto de forma segura.</p>
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-teal-100 bg-white shadow-teal-soft">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center mb-5"><span class="iconify text-teal-600" data-icon="lucide:database" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Backups seguros</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Backup manual con un clic, restauración, importación de archivos JSON externos y programación automática (diaria, semanal o mensual). Todos los datos en tu propio servidor.</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-emerald-100 bg-white shadow-emerald-soft">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5">
-            <span class="iconify text-emerald-600" data-icon="lucide:file-spreadsheet" data-width="24"></span>
-          </div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Exportación Profesional</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Exportación a PDF con detalle completo de todas las tablas y exportación a CSV para Excel. Documentos con membrete, logo y formato oficial.</p>
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-teal-100 bg-white shadow-teal-soft">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center mb-5"><span class="iconify text-teal-600" data-icon="lucide:monitor-smartphone" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Accesible desde cualquier dispositivo</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Una vez instalado, funciona desde computadoras (Windows, Mac, Linux), tablets, móviles y cualquier navegador web moderno. Sin instalación adicional en los equipos.</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ DETALLE GRANULAR ============ -->
-  <section class="py-24 md:py-32 relative bg-slate-50 border-y border-emerald-100">
-    <div class="max-w-5xl mx-auto px-6 relative z-10">
+  <section class="py-24 md:py-32 relative bg-slate-50 border-y border-teal-100">
+    <div class="absolute right-0 top-1/3 w-[400px] h-[400px] bg-sky-100 blob blur-[80px] pointer-events-none opacity-50"></div>
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
-        <span class="text-xs font-medium uppercase tracking-widest text-emerald-600 mb-4 block">Flexibilidad</span>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Detalle Granular por Concepto</h2>
-        <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Cada ficha permite gestionar item por item, asegurando un control riguroso de tu estructura de costos operativa.</p>
+        <span class="text-xs font-medium uppercase tracking-widest text-teal-600 mb-4 block">Módulos del Sistema</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Todo lo que necesitas en un solo lugar</h2>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-emerald-soft">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="iconify text-emerald-600" data-icon="lucide:package" data-width="24"></span>
-            <h3 class="text-lg font-semibold text-slate-900">Gasto Material</h3>
-          </div>
-          <p class="text-sm text-slate-500">Insumos, Combustible, Energía, Agua.</p>
-        </div>
-        
-        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-emerald-soft">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="iconify text-emerald-600" data-icon="lucide:users" data-width="24"></span>
-            <h3 class="text-lg font-semibold text-slate-900">Salario Directo</h3>
-          </div>
-          <p class="text-sm text-slate-500">Trabajadores, horas, brigadas, tarifas, pagos adicionales.</p>
-        </div>
-        
-        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-emerald-soft">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="iconify text-emerald-600" data-icon="lucide:truck" data-width="24"></span>
-            <h3 class="text-lg font-semibold text-slate-900">Otros Gastos Directos</h3>
-          </div>
-          <p class="text-sm text-slate-500">Transporte, Mantenimiento, Depreciación, PHT, Aseo, Dietas.</p>
-        </div>
-        
-        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-emerald-soft">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="iconify text-emerald-600" data-icon="lucide:briefcase" data-width="24"></span>
-            <h3 class="text-lg font-semibold text-slate-900">Gastos Asociados</h3>
-          </div>
-          <p class="text-sm text-slate-500">Salario Asociado, VST, Comunicaciones, Depreciación Producción, Arrendamiento.</p>
-        </div>
-        
-        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-emerald-soft md:col-span-2">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="iconify text-emerald-600" data-icon="lucide:landmark" data-width="24"></span>
-            <h3 class="text-lg font-semibold text-slate-900">Gastos Indirectos</h3>
-          </div>
-          <p class="text-sm text-slate-500">Gastos Generales, Distribución, Financieros, OSDE, Tributarios.</p>
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:layout-dashboard" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Dashboard</h3></div><p class="text-sm text-slate-500">KPIs en tiempo real, gráficos mensuales y diarios, top rutas, servicios recientes.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:route" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Rutas Prefijadas</h3></div><p class="text-sm text-slate-500">Catálogo CRUD de rutas con origen, destino, tiempo y kilometraje.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:clipboard-list" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Hoja de Ruta</h3></div><p class="text-sm text-slate-500">Registro de viajes con cálculo automático de km y hora de llegada.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:credit-card" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Anexo Combustible</h3></div><p class="text-sm text-slate-500">Control de chips/tarjetas con pista secuencial y validación de capacidad.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:car" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Vehículos</h3></div><p class="text-sm text-slate-500">Gestión multi-vehículo con índice de consumo, capacidad y mes de control.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:users" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Usuarios</h3></div><p class="text-sm text-slate-500">Roles: administrador, operador y auditor (solo lectura).</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:file-down" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Reportes</h3></div><p class="text-sm text-slate-500">Exportación Excel y PDF con datos de la entidad.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:save" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Backups</h3></div><p class="text-sm text-slate-500">Creación, restauración, importación y programación automática.</p></div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-slate-100 shadow-teal-soft"><div class="flex items-center gap-3 mb-3"><span class="iconify text-teal-600" data-icon="lucide:settings" data-width="24"></span><h3 class="text-lg font-semibold text-slate-900">Configuración</h3></div><p class="text-sm text-slate-500">Datos de la entidad para personalizar reportes.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ BENEFICIOS ============ -->
   <section class="py-24 md:py-32 bg-white">
     <div class="max-w-5xl mx-auto px-6 text-center">
-      <span class="text-xs font-medium uppercase tracking-widest text-emerald-600 mb-4 block">Beneficios para el Cliente</span>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-slate-900">¿Por qué elegir CreaCosto?</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Cumplimiento normativo garantizado:</strong> todas las fórmulas siguen la Resolución 148/2023.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Ahorro de tiempo:</strong> lo que tomaba horas en Excel ahora se hace en minutos.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Cálculos precisos:</strong> sin errores manuales, sin hojas de cálculo frágiles.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Defensa ante fiscalización:</strong> documentación generada con formato oficial.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Privacidad total:</strong> funciona 100% offline, tus datos nunca salen de tu PC.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Multiusuario:</strong> varios empleados pueden trabajar simultáneamente con permisos diferenciados.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Continuidad del negocio:</strong> sistema de backups automáticos protege tu información.</p>
-        </div>
-        <div class="reveal flex items-start gap-3 p-4">
-          <span class="iconify text-emerald-500 mt-1" data-icon="lucide:check-circle" data-width="24"></span>
-          <p class="text-slate-600"><strong class="text-slate-800">Multi-empresa:</strong> un solo sistema para todas tus líneas de negocio.</p>
-        </div>
+      <span class="text-xs font-medium uppercase tracking-widest text-teal-600 mb-4 block">¿Para quién es GERUCO?</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-slate-900">Diseñado para organizaciones que manejan flotas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="reveal flex items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 text-left transition-all hover:bg-teal-50 hover:border-teal-200"><span class="iconify text-teal-600" data-icon="lucide:truck" data-width="32"></span><span class="text-sm font-medium text-slate-700">Empresas de transporte que necesitan controlar el combustible de su flota.</span></div>
+        <div class="reveal flex items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 text-left transition-all hover:bg-teal-50 hover:border-teal-200"><span class="iconify text-teal-600" data-icon="lucide:building" data-width="32"></span><span class="text-sm font-medium text-slate-700">Entidades gubernamentales con vehículos asignados a diferentes áreas.</span></div>
+        <div class="reveal flex items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 text-left transition-all hover:bg-teal-50 hover:border-teal-200"><span class="iconify text-teal-600" data-icon="lucide:users" data-width="32"></span><span class="text-sm font-medium text-slate-700">Cooperativas y organizaciones que comparten vehículos y requieren rendición de cuentas.</span></div>
+        <div class="reveal flex items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 text-left transition-all hover:bg-teal-50 hover:border-teal-200"><span class="iconify text-teal-600" data-icon="lucide:package" data-width="32"></span><span class="text-sm font-medium text-slate-700">Empresas de logística y distribución con rutas prefijadas.</span></div>
+        <div class="reveal flex items-center gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 text-left transition-all hover:bg-teal-50 hover:border-teal-200 md:col-span-2"><span class="iconify text-teal-600" data-icon="lucide:rocket" data-width="32"></span><span class="text-sm font-medium text-slate-700">Cualquier organización que quiera modernizar el control de combustible.</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ MERCADO OBJETIVO ============ -->
-  <section class="py-24 md:py-32 bg-slate-50 border-y border-emerald-100">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <span class="text-xs font-medium uppercase tracking-widest text-emerald-600 mb-4 block">Mercado Objetivo</span>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-slate-900">¿Para quién es CreaCosto?</h2>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">🏪</span>
-          <span class="text-sm font-medium text-slate-700">Comercios y servicios</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">🚜</span>
-          <span class="text-sm font-medium text-slate-700">Productores agropecuarios</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">🏗️</span>
-          <span class="text-sm font-medium text-slate-700">Contratistas de construcción</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">🚚</span>
-          <span class="text-sm font-medium text-slate-700">Transportistas y logística</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">🏭</span>
-          <span class="text-sm font-medium text-slate-700">Pequeños fabricantes</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">💼</span>
-          <span class="text-sm font-medium text-slate-700">Consultores y contadores</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">🤝</span>
-          <span class="text-sm font-medium text-slate-700">Cooperativas de producción</span>
-        </div>
-        <div class="reveal p-5 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-2 transition-all hover:bg-emerald-50 hover:border-emerald-200">
-          <span class="text-3xl">📱</span>
-          <span class="text-sm font-medium text-slate-700">Desarrolladores de software</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA FINAL ============ -->
-  <section id="contacto" class="py-24 md:py-32 relative overflow-hidden bg-emerald-50 border-t border-emerald-100">
-    <div class="absolute inset-0 bg-gradient-to-b from-emerald-50 via-slate-50 to-white pointer-events-none"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime-100 blob blur-[100px] pointer-events-none opacity-60"></div>
-
+  <section id="contacto" class="py-24 md:py-32 relative overflow-hidden bg-teal-50 border-t border-teal-100">
+    <div class="absolute inset-0 bg-gradient-to-b from-teal-50 via-slate-50 to-white pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-100 blob blur-[100px] pointer-events-none opacity-60"></div>
     <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <div class="w-16 h-16 rounded-2xl bg-emerald-100 border border-emerald-200 flex items-center justify-center mx-auto mb-6">
-        <span class="iconify text-emerald-600" data-icon="lucide:shield-check" data-width="32"></span>
-      </div>
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Precios justos, defendibles y legales</h2>
-      <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-        Deja de preocuparte por los cálculos manuales y la fiscalización. CreaCosto asegura que tu negocio opere con total transparencia y rentabilidad.
-      </p>
-      <a href="mailto:hola@1869apps.com" class="btn-emerald text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">
-        Solicitar Demo
-        <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
-      </a>
+      <div class="w-16 h-16 rounded-2xl bg-teal-100 border border-teal-200 flex items-center justify-center mx-auto mb-6"><span class="iconify text-teal-600" data-icon="lucide:fuel" data-width="32"></span></div>
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Moderniza el control de tu flota</h2>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed mb-10">Deja atrás las hojas de cálculo manuales y los errores de cálculo. GERUCO te da el control total, la trazabilidad y los reportes que tu organización necesita.</p>
+      <a href="mailto:pedrolh@nauta.cu" class="btn-teal text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">Solicitar Demo <span class="iconify" data-icon="lucide:mail" data-width="16"></span></a>
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="bg-white border-t border-emerald-100 py-12">
+  <footer class="bg-white border-t border-teal-100 py-12">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3">
         <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto" />
         <p class="text-xs text-slate-400">© 2025 1869apps. Todos los derechos reservados.</p>
       </div>
-      <a href="index.html" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium transition-colors">Volver al inicio</a>
+      <a href="index.html" class="text-sm text-teal-600 hover:text-teal-700 font-medium transition-colors">Volver al inicio</a>
     </div>
   </footer>
 
-  <!-- ============ SCRIPTS ============ -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const menuBtn = document.getElementById('menuBtn');
       const closeMenuBtn = document.getElementById('closeMenu');
       const mobileMenu = document.getElementById('mobileMenu');
       const mobileLinks = document.querySelectorAll('.mobile-link');
-
-      const toggleMenu = (open) => {
-        mobileMenu.classList.toggle('open', open);
-        menuBtn.setAttribute('aria-expanded', open);
-      };
-
+      const toggleMenu = (open) => { mobileMenu.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
       menuBtn.addEventListener('click', () => toggleMenu(true));
       closeMenuBtn.addEventListener('click', () => toggleMenu(false));
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => toggleMenu(false));
-      });
-
+      mobileLinks.forEach(link => { link.addEventListener('click', () => toggleMenu(false)); });
       const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
       }, observerOptions);
-
-      document.querySelectorAll('.reveal').forEach((el, i) => {
-        el.style.transitionDelay = `${i * 0.05}s`;
-        observer.observe(el);
-      });
+      document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = `${i * 0.05}s`; observer.observe(el); });
     });
   </script>
 </body>
