@@ -19,7 +19,7 @@
         extend: {
           fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
-            brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' }
+            brand: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' }
           }
         }
       }
@@ -43,9 +43,6 @@
     
     @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; } }
     .blob { animation: morph 8s ease-in-out infinite; }
-    
-    .btn-primary { background: linear-gradient(135deg, #2563eb, #4f46e5); box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.3s ease; }
-    .btn-primary:hover { box-shadow: 0 8px 25px rgba(37,99,235,0.4); background: linear-gradient(135deg, #1d4ed8, #4338ca); transform: translateY(-1px); }
     
     .btn-rose { background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 4px 15px rgba(225,29,72,0.3); transition: all 0.3s ease; }
     .btn-rose:hover { box-shadow: 0 8px 25px rgba(225,29,72,0.4); background: linear-gradient(135deg, #be123c, #e11d48); transform: translateY(-1px); }
@@ -131,7 +128,7 @@
         <div class="flex justify-center lg:justify-end">
           <div class="relative">
             <div class="absolute inset-0 bg-gradient-to-tr from-rose-200 to-orange-200 blur-3xl opacity-50 rounded-full"></div>
-            <img src="https://z-cdn-media.chatglm.cn/files/4bf92a03-22d9-4476-9222-a904fe5fd831.png?auth_key=1883009558-bf687ba3b86d4575abb53278eca209bb-0-4d7cc20e746d22f1f0c093bc4e9933d1" alt="Logotipo de MiPOS" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
+            <img src="https://z-cdn-media.chatglm.cn/files/a32c91d4-9e80-439a-96be-c7fe455b5205.png?auth_key=1883002281-b07498f4c2cc46198a2033acaab0f845-0-cb43fdbe4a23115a0e4a7bdc124c199f" alt="Logotipo de MiPOS" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
           </div>
         </div>
 
@@ -373,10 +370,18 @@
       <p class="text-xl font-semibold text-rose-600 italic mb-10">
         Porque emprender en Cuba ya es un reto suficiente. El control de tu negocio no debería serlo.
       </p>
-      <a href="mailto:hola@1869apps.com" class="btn-rose text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">
-        Solicitar Demo
-        <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
-      </a>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <a href="mailto:pedrolh@nauta.cu" class="btn-rose text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">
+          Enviar un correo
+          <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
+        </a>
+        <a href="tel:+5353758234" class="border border-rose-200 text-rose-700 bg-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 hover:border-rose-400 hover:bg-rose-50 transition-all duration-300">
+          Llamar ahora
+          <span class="iconify" data-icon="lucide:phone" data-width="16"></span>
+        </a>
+      </div>
+      <p class="text-sm text-slate-500">Contáctanos a <a href="mailto:pedrolh@nauta.cu" class="text-rose-600 font-medium hover:underline">pedrolh@nauta.cu</a> o al <a href="tel:+5353758234" class="text-rose-600 font-medium hover:underline">+53 5375 8234</a>.</p>
     </div>
   </section>
 
