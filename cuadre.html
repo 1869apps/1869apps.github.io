@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuadre — Cierra tu caja en 5 minutos | 1869apps</title>
+  <meta name="description" content="Cuadre: La app para MIPYMES cubanas que te ayuda a cerrar la caja del día en 5 minutos. Conciliación de ventas, inventario y reportes sin internet.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: { 50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03' }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body { background-color: #ffffff; }
+    ::selection { background: rgba(217,119,6,0.15); color: #78350f; }
+    
+    .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .shadow-amber-soft { box-shadow: 0 10px 40px -10px rgba(245, 158, 11, 0.15); }
+    
+    .card-hover { transition: transform 400ms, box-shadow 400ms, border-color 400ms, opacity 600ms; will-change: transform, opacity; }
+    .card-hover:hover { transform: translateY(-0.5rem); border-color: rgba(245,158,11,0.4); box-shadow: 0 20px 50px -15px rgba(245,158,11,0.2); }
+    
+    .reveal { opacity: 0; transform: translateY(20px); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .gradient-text-amber { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    
+    @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; } }
+    .blob { animation: morph 8s ease-in-out infinite; }
+    
+    .btn-amber { background: linear-gradient(135deg, #d97706, #f59e0b); box-shadow: 0 4px 15px rgba(217,119,6,0.3); transition: all 0.3s ease; }
+    .btn-amber:hover { box-shadow: 0 8px 25px rgba(217,119,6,0.4); background: linear-gradient(135deg, #b45309, #d97706); transform: translateY(-1px); }
+    
+    .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
+    .mobile-menu.open { transform: translateX(0); }
+  </style>
+</head>
+<body class="text-slate-800 font-sans antialiased overflow-x-hidden">
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-amber-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3" aria-label="Inicio 1869apps">
+        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto object-contain" />
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html#inicio" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Inicio</a>
+        <a href="index.html#apps" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Proyectos</a>
+        <a href="index.html#testimonios" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Testimonios</a>
+        <a href="index.html#contacto" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Contacto</a>
+      </div>
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#contacto" class="btn-amber text-white text-xs font-medium h-10 px-6 rounded-full flex items-center transition-all duration-300">Hablemos</a>
+      </div>
+      <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden text-slate-600 hover:text-amber-600 transition-colors">
+        <span class="iconify" data-icon="lucide:menu" data-width="24"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-white border-l border-amber-100 p-6 md:hidden z-50 shadow-2xl">
+      <div class="flex justify-between items-center mb-10">
+        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-8 w-auto" />
+        <button id="closeMenu" aria-label="Cerrar menú" class="text-slate-500 hover:text-amber-600">
+          <span class="iconify" data-icon="lucide:x" data-width="24"></span>
+        </button>
+      </div>
+      <div class="flex flex-col gap-6">
+        <a href="index.html#inicio" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Inicio</a>
+        <a href="index.html#apps" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Proyectos</a>
+        <a href="index.html#testimonios" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Testimonios</a>
+        <a href="index.html#contacto" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO Cuadre ============ -->
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-white">
+    <div class="absolute top-10 left-10 w-[600px] h-[600px] bg-amber-100 blob blur-[100px] pointer-events-none opacity-60"></div>
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-orange-100 blob blur-[100px] pointer-events-none opacity-50" style="animation-delay: 4s;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-200 bg-amber-50 mb-6 shadow-sm">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            </span>
+            <span class="text-xs font-medium text-amber-700">100% Offline • Hecho para Cuba • Sin servidores</span>
+          </div>
+
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-4 text-slate-900">
+            <span class="gradient-text-amber">Cuadre</span>
+          </h1>
+          
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight mb-6 text-slate-800">
+            Cierra tu caja en 5 minutos.
+          </h2>
+
+          <p class="text-lg md:text-xl text-slate-500 leading-relaxed mx-auto lg:mx-0 mb-10 max-w-xl">
+            ¿Vendés en efectivo, Transfermóvil, EnZona, USD, EUR o MLC? ¿Al final del día no sabés bien cuánto vendiste ni dónde está el dinero que falta? Cuadre es la app que resuelve ese problema. Pensada para MIPYMES cubanas.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
+            <a href="#contacto" class="btn-amber text-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 transition-all duration-300">
+              Empezá hoy
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </a>
+            <a href="#caracteristicas" class="border border-amber-200 text-amber-700 bg-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 hover:border-amber-400 hover:bg-amber-50 transition-all duration-300">
+              Ver características
+            </a>
+          </div>
+        </div>
+
+        <div class="flex justify-center lg:justify-end">
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-tr from-amber-200 to-yellow-200 blur-3xl opacity-50 rounded-full"></div>
+            <img src="https://z-cdn-media.chatglm.cn/files/1545780a-32b4-4bbb-b8b9-19d6d4de4b78.png?auth_key=1883385231-32b4913fb15f42ed976f100afbc3138c-0-31048a7429a87b19a65f70d24492dca6" alt="Logotipo de Cuadre" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUÉ HACE CUADRE ============ -->
+  <section id="caracteristicas" class="py-24 md:py-32 relative bg-white">
+    <div class="absolute left-0 top-1/2 w-[400px] h-[400px] bg-amber-50 blob blur-[80px] pointer-events-none opacity-70"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Características</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Qué hace Cuadre</h2>
+        <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Herramientas reales para el día a día de tu negocio.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:scan-barcode" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Punto de venta rápido</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Buscá productos por nombre o código, armá el carrito y cobrá. Aceptá pagos mixtos en una sola venta. El ticket se comparte por WhatsApp o se imprime como PDF.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:refresh-cw" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Tasas de cambio del día</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Cargá las tasas USD, EUR y MLC una vez al día. Todas las ventas en moneda extranjera se convierten automáticamente a CUP. Guardamos el historial para que tengas auditoría.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:scale" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Cierre de caja con conciliación</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">El corazón del producto. Un botón gigante, ingresás los montos reales, y la app te muestra la diferencia por método: ✓ OK, ⚠ Faltan $X, +Sobran $Y. Agregá notas, registrá gastos y compartí el resumen.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:warehouse" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Inventario diario</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Llevá el control de existencias en almacén y punto de venta. La app te avisa cuándo un producto está bajo de stock. Movés mercadería del almacén al mostrador con un toque.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:bar-chart-3" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Reportes que sí usás</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Top de productos más vendidos, ventas por día con gráfico de tendencia, margen y ganancia por producto. Filtrá por fecha y por usuario. Exportá todo a Excel o PDF.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:file-text" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Libro de Ventas ONAT</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Generá el reporte tributario a partir de tus ventas, con cálculo de impuestos según tu régimen (General, Simplificado o Especial). Vos decidís qué incluir, no la app.</p>
+        </div>
+
+        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft md:col-span-2 lg:col-span-3 flex flex-col items-center text-center">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:users" data-width="24"></span></div>
+          <h3 class="text-lg font-semibold mb-2 text-slate-900">Multi-usuario con roles</h3>
+          <p class="text-sm text-slate-500 leading-relaxed max-w-2xl">Cada cajero tiene su PIN. El administrador ve todo; el cajero solo vende y cierra caja. Cada venta queda registrada con el nombre de quien la hizo.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ POR QUÉ ES DISTINTO ============ -->
+  <section class="py-24 md:py-32 relative bg-slate-50 border-y border-amber-100">
+    <div class="absolute right-0 top-1/3 w-[400px] h-[400px] bg-orange-100 blob blur-[80px] pointer-events-none opacity-50"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Ventajas</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Por qué es distinto</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-amber-soft">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-amber-600" data-icon="lucide:shield-check" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Tus datos viven en tu dispositivo</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Cuadre no envía nada a ningún servidor. No le entrega nada automáticamente a la ONAT. Vos generás el reporte, vos lo revisás, vos lo entregás. La app es una herramienta tuya, no un sistema de control.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-amber-soft">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-amber-600" data-icon="lucide:wifi-off" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Funciona sin internet</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Vendé, cerrá caja y consultá inventario aunque no tengas conexión. Cuando la app sincroniza algo (y solo si querés), lo hace localmente.</p>
+          </div>
+        </div>
+
+        <div class="reveal flex gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-amber-soft">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-amber-600" data-icon="lucide:map-pin" data-width="24"></span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2 text-slate-900">Hecho para la realidad cubana</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">No es una app gringa adaptada. Sabe qué es Transfermóvil, qué es EnZona, cómo funciona el MLC, qué tasas consultar cada día. Habla tu idioma: "cuadrar la caja", "punto de venta", "consumidor final".</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARA QUIÉN ES ============ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Para quién es</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-slate-900">Diseñado para dueños de MIPYMES en Cuba</h2>
+      
+      <p class="text-slate-600 text-lg max-w-3xl mx-auto leading-relaxed mb-12">
+        Tiendas de repuestos, cafeterías, ferreterías, bazares, farmacias independientes, panaderías, barberías, talleres. Cualquier negocio donde se reciba dinero en varios métodos y se necesite reconciliar al final del día.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section id="contacto" class="py-24 md:py-32 relative overflow-hidden bg-amber-50 border-t border-amber-100">
+    <div class="absolute inset-0 bg-gradient-to-b from-amber-50 via-slate-50 to-white pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-100 blob blur-[100px] pointer-events-none opacity-60"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Empezá hoy</h2>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+        Cargá tus productos, tus tasas del día, y registrá tu primera venta. En menos de diez minutos ya vas a estar cerrando tu primera caja con Cuadre.
+      </p>
+      <p class="text-2xl font-bold text-amber-600 mb-10">
+        Tus ventas, tu caja, tu control.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <a href="mailto:pedrolh@nauta.cu" class="btn-amber text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">
+          Enviar un correo
+          <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
+        </a>
+        <a href="tel:+5353758234" class="border border-amber-200 text-amber-700 bg-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 hover:border-amber-400 hover:bg-amber-50 transition-all duration-300">
+          Llamar ahora
+          <span class="iconify" data-icon="lucide:phone" data-width="16"></span>
+        </a>
+      </div>
+      <p class="text-sm text-slate-500">Contáctanos a <a href="mailto:pedrolh@nauta.cu" class="text-amber-600 font-medium hover:underline">pedrolh@nauta.cu</a> o al <a href="tel:+5353758234" class="text-amber-600 font-medium hover:underline">+53 5375 8234</a>.</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-white border-t border-amber-100 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto" />
+        <p class="text-xs text-slate-400">© 2025 1869apps. Todos los derechos reservados.</p>
+      </div>
+      <a href="index.html" class="text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors">Volver al inicio</a>
+    </div>
+  </footer>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('menuBtn');
+      const closeMenuBtn = document.getElementById('closeMenu');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      const toggleMenu = (open) => {
+        mobileMenu.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', open);
+      };
+
+      menuBtn.addEventListener('click', () => toggleMenu(true));
+      closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => toggleMenu(false));
+      });
+
+      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.05}s`;
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>
