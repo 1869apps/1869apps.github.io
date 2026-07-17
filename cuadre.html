@@ -49,6 +49,10 @@
     
     .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
     .mobile-menu.open { transform: translateX(0); }
+
+    /* Clase para ocultar la barra de scroll del carrusel manteniendo la funcionalidad */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="text-slate-800 font-sans antialiased overflow-x-hidden">
@@ -151,7 +155,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
         <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
           <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:scan-barcode" data-width="24"></span></div>
           <h3 class="text-lg font-semibold mb-2 text-slate-900">Punto de venta rápido</h3>
@@ -187,18 +190,11 @@
           <h3 class="text-lg font-semibold mb-2 text-slate-900">Libro de Ventas ONAT</h3>
           <p class="text-sm text-slate-500 leading-relaxed">Generá el reporte tributario a partir de tus ventas, con cálculo de impuestos según tu régimen (General, Simplificado o Especial). Vos decidís qué incluir, no la app.</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft md:col-span-2 lg:col-span-3 flex flex-col items-center text-center">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:users" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Multi-usuario con roles</h3>
-          <p class="text-sm text-slate-500 leading-relaxed max-w-2xl">Cada cajero tiene su PIN. El administrador ve todo; el cajero solo vende y cierra caja. Cada venta queda registrada con el nombre de quien la hizo.</p>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ GALERÍA ============ -->
+  <!-- ============ GALERÍA (Carrusel Horizontal) ============ -->
   <section class="py-24 md:py-32 relative bg-slate-50 border-y border-amber-100">
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
@@ -206,50 +202,62 @@
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Mira cómo funciona</h2>
         <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Una interfaz limpia, pensada para que cierres tu caja en 5 minutos.</p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
-        <!-- Imagen 1: Inicio -->
-        <div class="reveal group relative rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft transition-transform hover:scale-[1.02]">
-          <img src="https://z-cdn-media.chatglm.cn/files/0e6ff9c7-e213-41bc-9f5c-7ea529063a4f.jpeg?auth_key=1884324312-fb8a9b51907b4ef6b4b1f22520e9e8e6-0-7e788e411e96e33176fcd5340582c794" alt="Dashboard de Cuadre" class="w-full h-auto object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-            <span class="text-white font-medium text-sm">Inicio: Resumen diario y alertas</span>
+
+      <!-- Contenedor del carrusel -->
+      <div class="relative overflow-x-auto hide-scrollbar pb-8">
+        <div class="flex gap-6 snap-x snap-mandatory w-max mx-auto">
+          
+          <!-- Imagen 1 -->
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/0e6ff9c7-e213-41bc-9f5c-7ea529063a4f.jpeg?auth_key=1884324312-fb8a9b51907b4ef6b4b1f22520e9e8e6-0-7e788e411e96e33176fcd5340582c794" alt="Dashboard de Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
+              <span class="text-white font-semibold text-sm tracking-wide">Inicio: Resumen diario y alertas</span>
+            </div>
           </div>
-        </div>
-        <!-- Imagen 2: Vender -->
-        <div class="reveal group relative rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft transition-transform hover:scale-[1.02]">
-          <img src="https://z-cdn-media.chatglm.cn/files/75b9dd73-3396-43b5-9e29-5aa20819ea53.jpeg?auth_key=1884324312-6a457d51a96d453fa9dbd23e636b5692-0-6778c2e427c86151e86e3fc3e61c77d0" alt="Punto de venta de Cuadre" class="w-full h-auto object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-            <span class="text-white font-medium text-sm">Vender: Punto de venta rápido</span>
+
+          <!-- Imagen 2 -->
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/75b9dd73-3396-43b5-9e29-5aa20819ea53.jpeg?auth_key=1884324312-6a457d51a96d453fa9dbd23e636b5692-0-6778c2e427c86151e86e3fc3e61c77d0" alt="Punto de venta de Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
+              <span class="text-white font-semibold text-sm tracking-wide">Vender: Punto de venta rápido</span>
+            </div>
           </div>
-        </div>
-        <!-- Imagen 3: Cierre de Caja -->
-        <div class="reveal group relative rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft transition-transform hover:scale-[1.02]">
-          <img src="https://z-cdn-media.chatglm.cn/files/95579847-7b06-4b52-b6ed-de992389be4e.jpeg?auth_key=1884324312-82b14b22fdf54a71983f2297c2fad566-0-8a70003609c13cb0d9bb74e6be6f6a8e" alt="Cierre de caja en Cuadre" class="w-full h-auto object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-            <span class="text-white font-medium text-sm">Cierre: Conciliación exacta</span>
+
+          <!-- Imagen 3 -->
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/95579847-7b06-4b52-b6ed-de992389be4e.jpeg?auth_key=1884324312-82b14b22fdf54a71983f2297c2fad566-0-8a70003609c13cb0d9bb74e6be6f6a8e" alt="Cierre de caja en Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
+              <span class="text-white font-semibold text-sm tracking-wide">Cierre: Conciliación exacta</span>
+            </div>
           </div>
-        </div>
-        <!-- Imagen 4: Reportes -->
-        <div class="reveal group relative rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft transition-transform hover:scale-[1.02]">
-          <img src="https://z-cdn-media.chatglm.cn/files/6d63f9a0-21f1-45ce-b0a9-afdd01f9b8ee.jpeg?auth_key=1884324312-e9e92dcf169d4c7397afeda657656f73-0-aef6e933d33b65a348756b236a4fe5d7" alt="Reportes de ventas en Cuadre" class="w-full h-auto object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-            <span class="text-white font-medium text-sm">Reportes: Top productos</span>
+
+          <!-- Imagen 4 -->
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/6d63f9a0-21f1-45ce-b0a9-afdd01f9b8ee.jpeg?auth_key=1884324312-e9e92dcf169d4c7397afeda657656f73-0-aef6e933d33b65a348756b236a4fe5d7" alt="Reportes de ventas en Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
+              <span class="text-white font-semibold text-sm tracking-wide">Reportes: Top productos</span>
+            </div>
           </div>
-        </div>
-        <!-- Imagen 5: Tasas del Día -->
-        <div class="reveal group relative rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft transition-transform hover:scale-[1.02]">
-          <img src="https://z-cdn-media.chatglm.cn/files/d6e2b15d-2bc8-4ba3-a825-0e43c469f834.jpeg?auth_key=1884324312-566ae9fdac354a6995bb404561e1f8e5-0-a5b1ee04a93d9389b8eaf8836f4197d2" alt="Tasas del día en Cuadre" class="w-full h-auto object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-            <span class="text-white font-medium text-sm">Tasas: Conversión a CUP</span>
+
+          <!-- Imagen 5 -->
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/d6e2b15d-2bc8-4ba3-a825-0e43c469f834.jpeg?auth_key=1884324312-566ae9fdac354a6995bb404561e1f8e5-0-a5b1ee04a93d9389b8eaf8836f4197d2" alt="Tasas del día en Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
+              <span class="text-white font-semibold text-sm tracking-wide">Tasas: Conversión a CUP</span>
+            </div>
           </div>
-        </div>
-        <!-- Imagen 6: Menú lateral -->
-        <div class="reveal group relative rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft transition-transform hover:scale-[1.02]">
-          <img src="https://z-cdn-media.chatglm.cn/files/a55a8792-1331-4551-8192-8a2228f433ff.jpeg?auth_key=1884324312-f96e8b893d144482ad3eca90a1ace44a-0-261610c0367fad213c966c5fdbe293f9" alt="Menú lateral de Cuadre" class="w-full h-auto object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-            <span class="text-white font-medium text-sm">Menú: Todo a la mano</span>
+
+          <!-- Imagen 6 -->
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/a55a8792-1331-4551-8192-8a2228f433ff.jpeg?auth_key=1884324312-f96e8b893d144482ad3eca90a1ace44a-0-261610c0367fad213c966c5fdbe293f9" alt="Menú lateral de Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
+              <span class="text-white font-semibold text-sm tracking-wide">Menú: Todo a la mano</span>
+            </div>
           </div>
+
         </div>
       </div>
+      <p class="text-center text-slate-400 text-sm mt-4 md:hidden">Desliza horizontalmente para ver más →</p>
     </div>
   </section>
 
@@ -292,6 +300,50 @@
             <h3 class="text-lg font-semibold mb-2 text-slate-900">Hecho para la realidad cubana</h3>
             <p class="text-sm text-slate-500 leading-relaxed">No es una app gringa adaptada. Sabe qué es Transfermóvil, qué es EnZona, cómo funciona el MLC, qué tasas consultar cada día. Habla tu idioma: "cuadrar la caja", "punto de venta", "consumidor final".</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SUGERENCIAS DE NEGOCIOS ============ -->
+  <section class="py-24 md:py-32 bg-slate-50 border-y border-amber-100">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Para quién es</span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Diseñado para tu negocio en Cuba</h2>
+      <p class="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed mb-12">Cualquier negocio donde se reciba dinero en varios métodos y se necesite reconciliar al final del día.</p>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">🛒</span>
+          <span class="text-sm font-semibold text-slate-700">Tiendas de repuestos</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">☕</span>
+          <span class="text-sm font-semibold text-slate-700">Cafeterías y panaderías</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">🔧</span>
+          <span class="text-sm font-semibold text-slate-700">Ferreterías y bazares</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">💊</span>
+          <span class="text-sm font-semibold text-slate-700">Farmacias independientes</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">💈</span>
+          <span class="text-sm font-semibold text-slate-700">Barberías y peluquerías</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">🛠️</span>
+          <span class="text-sm font-semibold text-slate-700">Talleres de mecánica</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">🍕</span>
+          <span class="text-sm font-semibold text-slate-700">Expendios de comida</span>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
+          <span class="text-4xl">🏪</span>
+          <span class="text-sm font-semibold text-slate-700">Cualquier MIPYME que venda</span>
         </div>
       </div>
     </div>
