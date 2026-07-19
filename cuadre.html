@@ -3,139 +3,462 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cuadre — Cierra tu caja en 5 minutos | 1869apps</title>
-  <meta name="description" content="Cuadre: La app para MIPYMES cubanas que te ayuda a cerrar la caja del día en 5 minutos. Conciliación de ventas, inventario y reportes sin internet.">
+  <title>Cuadre — Cierra tu caja en 5 minutos | App para MIPYMES cubanas</title>
+  <meta name="description" content="Cuadre es la app Android que ayuda a MIPYMES cubanas a cerrar la caja del día en 5 minutos. Conciliación de ventas, inventario y reportes sin internet. Hecha para Transfermóvil, EnZona, USD, EUR y MLC.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
-  
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif']
+          },
           colors: {
+            ink: { 950: '#08080b', 900: '#0e0e13', 800: '#15151c', 700: '#1d1d26' },
             brand: { 50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03' }
           }
         }
       }
     }
   </script>
-  
+
   <style>
-    body { background-color: #ffffff; }
-    ::selection { background: rgba(217,119,6,0.15); color: #78350f; }
-    
-    .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-    .shadow-amber-soft { box-shadow: 0 10px 40px -10px rgba(245, 158, 11, 0.15); }
-    
-    .card-hover { transition: transform 400ms, box-shadow 400ms, border-color 400ms, opacity 600ms; will-change: transform, opacity; }
-    .card-hover:hover { transform: translateY(-0.5rem); border-color: rgba(245,158,11,0.4); box-shadow: 0 20px 50px -15px rgba(245,158,11,0.2); }
-    
-    .reveal { opacity: 0; transform: translateY(20px); }
+    html, body { background-color: #08080b; }
+    body { font-family: 'Inter', sans-serif; color: #fafafa; overflow-x: hidden; }
+    ::selection { background: rgba(245, 158, 11, 0.25); color: #fff; }
+
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    /* Grid background pattern */
+    .bg-grid {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .bg-grid-light {
+      background-image:
+        linear-gradient(to right, rgba(15,23,42,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,23,42,0.05) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .bg-dots {
+      background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Gradient text */
+    .gradient-amber {
+      background: linear-gradient(135deg, #fde68a 0%, #fbbf24 35%, #f59e0b 70%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-light {
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glow effects */
+    .glow-amber { box-shadow: 0 0 80px -10px rgba(245, 158, 11, 0.45); }
+    .glow-amber-sm { box-shadow: 0 0 40px -8px rgba(245, 158, 11, 0.4); }
+    .text-glow { text-shadow: 0 0 30px rgba(245, 158, 11, 0.4); }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 60%, #d97706 100%);
+      color: #1a0f00;
+      font-weight: 600;
+      transition: all 300ms;
+      box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(245, 158, 11, 0.7), inset 0 1px 0 rgba(255,255,255,0.3); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fafafa;
+      transition: all 300ms;
+      backdrop-filter: blur(10px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(245,158,11,0.4); }
+
+    /* Glass nav */
+    .glass-nav { background: rgba(8,8,11,0.7); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); }
+
+    /* Phone mockup */
+    .phone-frame {
+      position: relative;
+      width: 280px;
+      height: 580px;
+      background: linear-gradient(145deg, #1a1a22 0%, #0a0a0e 100%);
+      border-radius: 42px;
+      padding: 12px;
+      box-shadow:
+        0 0 0 2px rgba(255,255,255,0.06),
+        0 30px 80px -10px rgba(245, 158, 11, 0.35),
+        0 60px 120px -20px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #fafafa;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 24px;
+      background: #0a0a0e;
+      border-radius: 14px;
+      z-index: 10;
+    }
+
+    /* Floating badge animation */
+    @keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .float-anim { animation: float-y 4s ease-in-out infinite; }
+    .float-anim-2 { animation: float-y 5s ease-in-out infinite; animation-delay: 0.5s; }
+    .float-anim-3 { animation: float-y 6s ease-in-out infinite; animation-delay: 1s; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 700ms cubic-bezier(.2,.7,.2,1), transform 700ms cubic-bezier(.2,.7,.2,1); will-change: transform, opacity; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    .gradient-text-amber { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    
-    @keyframes morph { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; } }
-    .blob { animation: morph 8s ease-in-out infinite; }
-    
-    .btn-amber { background: linear-gradient(135deg, #d97706, #f59e0b); box-shadow: 0 4px 15px rgba(217,119,6,0.3); transition: all 0.3s ease; }
-    .btn-amber:hover { box-shadow: 0 8px 25px rgba(217,119,6,0.4); background: linear-gradient(135deg, #b45309, #d97706); transform: translateY(-1px); }
-    
-    .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
-    .mobile-menu.open { transform: translateX(0); }
+    /* Bento card */
+    .bento-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      transition: all 400ms;
+      overflow: hidden;
+      position: relative;
+    }
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(245,158,11,0.12), transparent 50%);
+      opacity: 0;
+      transition: opacity 400ms;
+      pointer-events: none;
+    }
+    .bento-card:hover { transform: translateY(-4px); border-color: rgba(245,158,11,0.35); }
+    .bento-card:hover::before { opacity: 1; }
 
-    /* Clase para ocultar la barra de scroll del carrusel manteniendo la funcionalidad */
+    /* Light section card */
+    .light-card {
+      background: #ffffff;
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 20px;
+      transition: all 400ms;
+    }
+    .light-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -15px rgba(245,158,11,0.25); border-color: rgba(245,158,11,0.3); }
+
+    /* Marquee */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { display: flex; width: max-content; animation: marquee 35s linear infinite; }
+
+    /* Hide scrollbar */
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Counter style */
+    .counter { font-variant-numeric: tabular-nums; }
+
+    /* FAQ accordion */
+    .faq-item .faq-body { max-height: 0; overflow: hidden; transition: max-height 400ms ease, padding 400ms ease; }
+    .faq-item.open .faq-body { max-height: 400px; padding-top: 0.75rem; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 300ms; }
+
+    /* Gradient border for download card */
+    .gradient-border {
+      position: relative;
+      background: linear-gradient(135deg, rgba(8,8,11,0.95), rgba(15,15,21,0.95));
+      border-radius: 32px;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.5), rgba(245,158,11,0.05) 50%, rgba(245,158,11,0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Aurora background */
+    .aurora { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .aurora::before, .aurora::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+    }
+    .aurora::before { width: 500px; height: 500px; background: radial-gradient(circle, rgba(245,158,11,0.4), transparent 70%); top: -100px; left: -100px; }
+    .aurora::after { width: 600px; height: 600px; background: radial-gradient(circle, rgba(217,119,6,0.3), transparent 70%); top: 200px; right: -150px; }
+
+    /* Section divider */
+    .divider-glow {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(245,158,11,0.4), transparent);
+    }
+
+    /* Mobile menu */
+    .mobile-menu { transform: translateX(100%); transition: transform 350ms cubic-bezier(.2,.7,.2,1); }
+    .mobile-menu.open { transform: translateX(0); }
   </style>
 </head>
-<body class="text-slate-800 font-sans antialiased overflow-x-hidden">
+<body class="antialiased">
 
-  <!-- ============ NAVBAR ============ -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-amber-100 shadow-sm">
+  <!-- ============ NAV ============ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/5">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3" aria-label="Inicio 1869apps">
-        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto object-contain" />
+      <a href="#inicio" class="flex items-center gap-2.5 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-300 to-amber-600 flex items-center justify-center font-display font-bold text-ink-950 text-lg shadow-lg shadow-amber-500/30">C</div>
+        <span class="font-display font-semibold text-lg tracking-tight">Cuadre</span>
       </a>
-      <div class="hidden md:flex items-center gap-8">
-        <a href="index.html#inicio" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Inicio</a>
-        <a href="index.html#apps" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Proyectos</a>
-        <a href="index.html#testimonios" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Testimonios</a>
-        <a href="index.html#contacto" class="text-sm text-slate-600 hover:text-amber-600 transition-colors duration-150 font-medium">Contacto</a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+        <a href="#caracteristicas" class="hover:text-white transition-colors">Características</a>
+        <a href="#como-funciona" class="hover:text-white transition-colors">Cómo funciona</a>
+        <a href="#galeria" class="hover:text-white transition-colors">Galería</a>
+        <a href="#comparativa" class="hover:text-white transition-colors">Comparativa</a>
+        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
       </div>
-      <div class="hidden md:flex items-center gap-4">
-        <a href="#descargas" class="btn-amber text-white text-xs font-medium h-10 px-6 rounded-full flex items-center transition-all duration-300">Descargar App</a>
+
+      <div class="hidden md:flex items-center gap-3">
+        <a href="#descargas" class="btn-primary h-10 px-5 rounded-full text-sm inline-flex items-center gap-2">
+          Descargar APK
+          <span class="iconify" data-icon="lucide:arrow-down-to-line" data-width="14"></span>
+        </a>
       </div>
-      <button id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="md:hidden text-slate-600 hover:text-amber-600 transition-colors">
-        <span class="iconify" data-icon="lucide:menu" data-width="24"></span>
+
+      <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-white/80" aria-label="Abrir menú">
+        <span class="iconify" data-icon="lucide:menu" data-width="22"></span>
       </button>
-    </div>
-    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-white border-l border-amber-100 p-6 md:hidden z-50 shadow-2xl">
-      <div class="flex justify-between items-center mb-10">
-        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-8 w-auto" />
-        <button id="closeMenu" aria-label="Cerrar menú" class="text-slate-500 hover:text-amber-600">
-          <span class="iconify" data-icon="lucide:x" data-width="24"></span>
-        </button>
-      </div>
-      <div class="flex flex-col gap-6">
-        <a href="index.html#inicio" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Inicio</a>
-        <a href="index.html#apps" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Proyectos</a>
-        <a href="index.html#testimonios" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Testimonios</a>
-        <a href="index.html#contacto" class="text-slate-700 hover:text-amber-600 transition-colors mobile-link font-medium">Contacto</a>
-      </div>
     </div>
   </nav>
 
-  <!-- ============ HERO Cuadre ============ -->
-  <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-white">
-    <div class="absolute top-10 left-10 w-[600px] h-[600px] bg-amber-100 blob blur-[100px] pointer-events-none opacity-60"></div>
-    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-orange-100 blob blur-[100px] pointer-events-none opacity-50" style="animation-delay: 4s;"></div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-72 bg-ink-900 border-l border-white/10 z-50 md:hidden p-6">
+    <div class="flex justify-end mb-8">
+      <button id="closeMenu" class="w-10 h-10 flex items-center justify-center text-white/70">
+        <span class="iconify" data-icon="lucide:x" data-width="22"></span>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-5 text-white/80 text-lg">
+      <a href="#caracteristicas" class="mobile-link hover:text-amber-400 transition-colors">Características</a>
+      <a href="#como-funciona" class="mobile-link hover:text-amber-400 transition-colors">Cómo funciona</a>
+      <a href="#galeria" class="mobile-link hover:text-amber-400 transition-colors">Galería</a>
+      <a href="#comparativa" class="mobile-link hover:text-amber-400 transition-colors">Comparativa</a>
+      <a href="#faq" class="mobile-link hover:text-amber-400 transition-colors">FAQ</a>
+      <a href="#descargas" class="mobile-link btn-primary h-12 px-6 rounded-full text-sm inline-flex items-center justify-center gap-2 mt-4">Descargar APK</a>
+    </nav>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section id="inicio" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+    <div class="aurora"></div>
+    <div class="absolute inset-0 bg-grid opacity-60"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink-950"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+        <!-- Left: Copy -->
         <div class="text-center lg:text-left">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-200 bg-amber-50 mb-6 shadow-sm">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/5 mb-6 backdrop-blur-sm">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
-            <span class="text-xs font-medium text-amber-700">100% Offline • Hecho para Cuba • Sin servidores</span>
+            <span class="text-xs font-medium text-amber-200/90 tracking-wide">100% Offline · Hecho para Cuba · Sin servidores</span>
           </div>
 
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-4 text-slate-900">
-            <span class="gradient-text-amber">Cuadre</span>
+          <h1 class="font-display font-bold tracking-tight leading-[0.95] mb-6 text-5xl sm:text-6xl md:text-7xl">
+            <span class="gradient-light block">Cierra tu caja</span>
+            <span class="gradient-amber text-glow block">en 5 minutos.</span>
           </h1>
-          
-          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight mb-6 text-slate-800">
-            Cierra tu caja en 5 minutos.
-          </h2>
 
-          <p class="text-lg md:text-xl text-slate-500 leading-relaxed mx-auto lg:mx-0 mb-10 max-w-xl">
-            ¿Vendés en efectivo, Transfermóvil, EnZona, USD, EUR o MLC? ¿Al final del día no sabés bien cuánto vendiste ni dónde está el dinero que falta? Cuadre es la app que resuelve ese problema. Pensada para MIPYMES cubanas.
+          <p class="text-base md:text-lg text-white/60 leading-relaxed mx-auto lg:mx-0 mb-10 max-w-xl">
+            ¿Vendés en efectivo, Transfermóvil, EnZona, USD, EUR o MLC? ¿Al final del día no sabés bien cuánto vendiste ni dónde está el dinero que falta? <span class="text-white/90 font-medium">Cuadre</span> resuelve ese problema. Pensada para MIPYMES cubanas.
           </p>
 
-          <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-            <a href="#descargas" class="btn-amber text-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 transition-all duration-300">
+          <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 mb-10">
+            <a href="#descargas" class="btn-primary h-13 px-7 py-3.5 rounded-full text-sm inline-flex items-center gap-2 w-full sm:w-auto justify-center">
               Descargar App
               <span class="iconify" data-icon="lucide:download" data-width="16"></span>
             </a>
-            <a href="#caracteristicas" class="border border-amber-200 text-amber-700 bg-white text-sm font-medium h-12 px-8 rounded-full flex items-center gap-2 hover:border-amber-400 hover:bg-amber-50 transition-all duration-300">
+            <a href="#caracteristicas" class="btn-ghost h-13 px-7 py-3.5 rounded-full text-sm inline-flex items-center gap-2 w-full sm:w-auto justify-center">
               Ver características
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
             </a>
           </div>
+
+          <!-- Mini trust badges -->
+          <div class="flex items-center justify-center lg:justify-start gap-6 text-xs text-white/40">
+            <div class="flex items-center gap-1.5">
+              <span class="iconify text-amber-400" data-icon="lucide:shield-check" data-width="14"></span>
+              Sin registros
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="iconify text-amber-400" data-icon="lucide:wifi-off" data-width="14"></span>
+              Sin internet
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="iconify text-amber-400" data-icon="lucide:smartphone" data-width="14"></span>
+              Android 8+
+            </div>
+          </div>
         </div>
 
-        <div class="flex justify-center lg:justify-end">
-          <div class="relative">
-            <div class="absolute inset-0 bg-gradient-to-tr from-amber-200 to-yellow-200 blur-3xl opacity-50 rounded-full"></div>
-            <img src="https://z-cdn-media.chatglm.cn/files/1545780a-32b4-4bbb-b8b9-19d6d4de4b78.png?auth_key=1883385231-32b4913fb15f42ed976f100afbc3138c-0-31048a7429a87b19a65f70d24492dca6" alt="Logotipo de Cuadre" class="relative z-10 w-72 h-72 object-contain drop-shadow-2xl rounded-3xl" />
+        <!-- Right: Phone Mockup -->
+        <div class="flex justify-center lg:justify-end relative">
+          <!-- Floating UI elements -->
+          <div class="absolute -top-4 -left-4 md:left-0 z-20 float-anim">
+            <div class="bg-ink-800/90 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-xl">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center">
+                  <span class="iconify text-emerald-400" data-icon="lucide:check" data-width="18"></span>
+                </div>
+                <div>
+                  <p class="text-xs text-white/50">Cierre correcto</p>
+                  <p class="text-sm font-semibold text-white">$4,825.00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute top-1/3 -right-2 md:right-0 z-20 float-anim-2">
+            <div class="bg-ink-800/90 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-xl">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                  <span class="iconify text-amber-400" data-icon="lucide:trending-up" data-width="18"></span>
+                </div>
+                <div>
+                  <p class="text-xs text-white/50">Ventas de hoy</p>
+                  <p class="text-sm font-semibold text-white">+18% vs ayer</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-12 -left-2 md:left-4 z-20 float-anim-3">
+            <div class="bg-ink-800/90 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-xl">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-sky-500/15 flex items-center justify-center">
+                  <span class="iconify text-sky-400" data-icon="lucide:refresh-cw" data-width="16"></span>
+                </div>
+                <div>
+                  <p class="text-xs text-white/50">USD hoy</p>
+                  <p class="text-sm font-semibold text-white">1 USD = 320 CUP</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <!-- App screen mockup -->
+              <div class="bg-gradient-to-b from-amber-50 to-white h-full flex flex-col">
+                <!-- Status bar -->
+                <div class="flex justify-between items-center px-6 pt-3 pb-2 text-[10px] text-slate-700 font-medium">
+                  <span>9:41</span>
+                  <div class="flex items-center gap-1">
+                    <span class="iconify" data-icon="lucide:signal" data-width="11"></span>
+                    <span class="iconify" data-icon="lucide:wifi" data-width="11"></span>
+                    <span class="iconify" data-icon="lucide:battery-full" data-width="14"></span>
+                  </div>
+                </div>
+
+                <!-- Header -->
+                <div class="px-5 pt-6 pb-3">
+                  <p class="text-[11px] text-slate-500 font-medium">Mi Negocio</p>
+                  <p class="text-lg font-bold text-slate-900 font-display">Cierre de caja</p>
+                </div>
+
+                <!-- Total card -->
+                <div class="mx-5 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 p-4 text-white shadow-lg shadow-amber-500/30">
+                  <p class="text-[10px] text-amber-100 uppercase tracking-wider font-medium">Total esperado</p>
+                  <p class="text-3xl font-bold font-display mt-1">$ 4,825.00</p>
+                  <div class="flex items-center gap-1.5 mt-2 text-[10px] text-amber-50">
+                    <span class="iconify" data-icon="lucide:check-circle" data-width="12"></span>
+                    Cuadre exacto
+                  </div>
+                </div>
+
+                <!-- Methods -->
+                <div class="px-5 mt-4 space-y-2">
+                  <div class="flex justify-between items-center py-2 px-3 rounded-xl bg-white shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2">
+                      <div class="w-7 h-7 rounded-lg bg-emerald-100 flex items-center justify-center">
+                        <span class="iconify text-emerald-600" data-icon="lucide:banknote" data-width="14"></span>
+                      </div>
+                      <span class="text-xs font-medium text-slate-700">Efectivo</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-900">$2,100</span>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 rounded-xl bg-white shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2">
+                      <div class="w-7 h-7 rounded-lg bg-sky-100 flex items-center justify-center">
+                        <span class="iconify text-sky-600" data-icon="lucide:smartphone" data-width="14"></span>
+                      </div>
+                      <span class="text-xs font-medium text-slate-700">Transfermóvil</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-900">$1,890</span>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 rounded-xl bg-white shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2">
+                      <div class="w-7 h-7 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <span class="iconify text-purple-600" data-icon="lucide:credit-card" data-width="14"></span>
+                      </div>
+                      <span class="text-xs font-medium text-slate-700">EnZona</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-900">$580</span>
+                  </div>
+                  <div class="flex justify-between items-center py-2 px-3 rounded-xl bg-white shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2">
+                      <div class="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center">
+                        <span class="iconify text-amber-700" data-icon="lucide:dollar-sign" data-width="14"></span>
+                      </div>
+                      <span class="text-xs font-medium text-slate-700">USD (×320)</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-900">$255</span>
+                  </div>
+                </div>
+
+                <!-- Confirm button -->
+                <div class="mt-auto p-5">
+                  <div class="bg-slate-900 rounded-2xl py-3 text-center text-white text-xs font-semibold flex items-center justify-center gap-1.5">
+                    <span class="iconify" data-icon="lucide:check-circle-2" data-width="14"></span>
+                    Confirmar cierre
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -143,287 +466,690 @@
     </div>
   </section>
 
-  <!-- ============ QUÉ HACE CUADRE ============ -->
-  <section id="caracteristicas" class="py-24 md:py-32 relative bg-white">
-    <div class="absolute left-0 top-1/2 w-[400px] h-[400px] bg-amber-50 blob blur-[80px] pointer-events-none opacity-70"></div>
+  <!-- ============ TRUST MARQUEE ============ -->
+  <section class="py-8 border-y border-white/5 bg-ink-900/50 overflow-hidden">
+    <div class="marquee-track gap-12 text-white/30 text-sm font-medium">
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:wifi-off" data-width="16"></span>Funciona sin internet</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:shield-check" data-width="16"></span>Tus datos en tu dispositivo</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:banknote" data-width="16"></span>Transfermóvil y EnZona</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:refresh-cw" data-width="16"></span>USD, EUR y MLC</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:file-text" data-width="16"></span>Libro de Ventas ONAT</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:warehouse" data-width="16"></span>Inventario diario</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:bar-chart-3" data-width="16"></span>Reportes en Excel y PDF</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:wifi-off" data-width="16"></span>Funciona sin internet</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:shield-check" data-width="16"></span>Tus datos en tu dispositivo</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:banknote" data-width="16"></span>Transfermóvil y EnZona</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:refresh-cw" data-width="16"></span>USD, EUR y MLC</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:file-text" data-width="16"></span>Libro de Ventas ONAT</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:warehouse" data-width="16"></span>Inventario diario</span>
+      <span class="flex items-center gap-2"><span class="iconify text-amber-400/60" data-icon="lucide:bar-chart-3" data-width="16"></span>Reportes en Excel y PDF</span>
+    </div>
+  </section>
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16">
-        <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Características</span>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Qué hace Cuadre</h2>
-        <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Herramientas reales para el día a día de tu negocio.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:scan-barcode" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Punto de venta rápido</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Buscá productos por nombre o código, armá el carrito y cobrá. Aceptá pagos mixtos en una sola venta. El ticket se comparte por WhatsApp o se imprime como PDF.</p>
+  <!-- ============ STATS ============ -->
+  <section class="py-20 md:py-24 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div class="reveal text-center">
+          <p class="font-display font-bold text-4xl md:text-6xl gradient-amber counter" data-target="5">0</p>
+          <p class="text-xs md:text-sm text-white/50 mt-2">Minutos para cerrar caja</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:refresh-cw" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Tasas de cambio del día</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Cargá las tasas USD, EUR y MLC una vez al día. Todas las ventas en moneda extranjera se convierten automáticamente a CUP. Guardamos el historial para que tengas auditoría.</p>
+        <div class="reveal text-center">
+          <p class="font-display font-bold text-4xl md:text-6xl gradient-amber counter" data-target="100">0</p>
+          <p class="text-xs md:text-sm text-white/50 mt-2">% Offline</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:scale" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Cierre de caja con conciliación</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">El corazón del producto. Un botón gigante, ingresás los montos reales, y la app te muestra la diferencia por método: ✓ OK, ⚠ Faltan $X, +Sobran $Y. Agregá notas, registrá gastos y compartí el resumen.</p>
+        <div class="reveal text-center">
+          <p class="font-display font-bold text-4xl md:text-6xl gradient-amber counter" data-target="6">0</p>
+          <p class="text-xs md:text-sm text-white/50 mt-2">Métodos de pago</p>
         </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:warehouse" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Inventario diario</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Llevá el control de existencias en almacén y punto de venta. La app te avisa cuándo un producto está bajo de stock. Movés mercadería del almacén al mostrador con un toque.</p>
-        </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:bar-chart-3" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Reportes que sí usás</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Top de productos más vendidos, ventas por día con gráfico de tendencia, margen y ganancia por producto. Filtrá por fecha y por usuario. Exportá todo a Excel o PDF.</p>
-        </div>
-
-        <div class="reveal card-hover relative p-8 rounded-2xl border border-amber-100 bg-white shadow-amber-soft">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5"><span class="iconify text-amber-600" data-icon="lucide:file-text" data-width="24"></span></div>
-          <h3 class="text-lg font-semibold mb-2 text-slate-900">Libro de Ventas ONAT</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Generá el reporte tributario a partir de tus ventas, con cálculo de impuestos según tu régimen (General, Simplificado o Especial). Vos decidís qué incluir, no la app.</p>
+        <div class="reveal text-center">
+          <p class="font-display font-bold text-4xl md:text-6xl gradient-amber counter" data-target="0">0</p>
+          <p class="text-xs md:text-sm text-white/50 mt-2">Servidores externos</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ GALERÍA (Carrusel Horizontal) ============ -->
-  <section class="py-24 md:py-32 relative bg-slate-50 border-y border-amber-100">
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16">
-        <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Galería</span>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Mira cómo funciona</h2>
-        <p class="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">Una interfaz limpia, pensada para que cierres tu caja en 5 minutos.</p>
-      </div>
-
-      <!-- Contenedor del carrusel -->
-      <div class="relative overflow-x-auto hide-scrollbar pb-8">
-        <div class="flex gap-6 snap-x snap-mandatory w-max mx-auto">
-          
-          <!-- Imagen 1 -->
-          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
-            <img src="https://z-cdn-media.chatglm.cn/files/0e6ff9c7-e213-41bc-9f5c-7ea529063a4f.jpeg?auth_key=1884324312-fb8a9b51907b4ef6b4b1f22520e9e8e6-0-7e788e411e96e33176fcd5340582c794" alt="Dashboard de Cuadre" class="w-full h-auto object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
-              <span class="text-white font-semibold text-sm tracking-wide">Inicio: Resumen diario y alertas</span>
-            </div>
-          </div>
-
-          <!-- Imagen 2 -->
-          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
-            <img src="https://z-cdn-media.chatglm.cn/files/75b9dd73-3396-43b5-9e29-5aa20819ea53.jpeg?auth_key=1884324312-6a457d51a96d453fa9dbd23e636b5692-0-6778c2e427c86151e86e3fc3e61c77d0" alt="Punto de venta de Cuadre" class="w-full h-auto object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
-              <span class="text-white font-semibold text-sm tracking-wide">Vender: Punto de venta rápido</span>
-            </div>
-          </div>
-
-          <!-- Imagen 3 -->
-          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
-            <img src="https://z-cdn-media.chatglm.cn/files/95579847-7b06-4b52-b6ed-de992389be4e.jpeg?auth_key=1884324312-82b14b22fdf54a71983f2297c2fad566-0-8a70003609c13cb0d9bb74e6be6f6a8e" alt="Cierre de caja en Cuadre" class="w-full h-auto object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
-              <span class="text-white font-semibold text-sm tracking-wide">Cierre: Conciliación exacta</span>
-            </div>
-          </div>
-
-          <!-- Imagen 4 -->
-          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
-            <img src="https://z-cdn-media.chatglm.cn/files/6d63f9a0-21f1-45ce-b0a9-afdd01f9b8ee.jpeg?auth_key=1884324312-e9e92dcf169d4c7397afeda657656f73-0-aef6e933d33b65a348756b236a4fe5d7" alt="Reportes de ventas en Cuadre" class="w-full h-auto object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
-              <span class="text-white font-semibold text-sm tracking-wide">Reportes: Top productos</span>
-            </div>
-          </div>
-
-          <!-- Imagen 5 -->
-          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
-            <img src="https://z-cdn-media.chatglm.cn/files/d6e2b15d-2bc8-4ba3-a825-0e43c469f834.jpeg?auth_key=1884324312-566ae9fdac354a6995bb404561e1f8e5-0-a5b1ee04a93d9389b8eaf8836f4197d2" alt="Tasas del día en Cuadre" class="w-full h-auto object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
-              <span class="text-white font-semibold text-sm tracking-wide">Tasas: Conversión a CUP</span>
-            </div>
-          </div>
-
-          <!-- Imagen 6 -->
-          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-slate-100 shadow-amber-soft relative group">
-            <img src="https://z-cdn-media.chatglm.cn/files/a55a8792-1331-4551-8192-8a2228f433ff.jpeg?auth_key=1884324312-f96e8b893d144482ad3eca90a1ace44a-0-261610c0367fad213c966c5fdbe293f9" alt="Menú lateral de Cuadre" class="w-full h-auto object-cover" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-4">
-              <span class="text-white font-semibold text-sm tracking-wide">Menú: Todo a la mano</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <p class="text-center text-slate-400 text-sm mt-4 md:hidden">Desliza horizontalmente para ver más →</p>
-    </div>
-  </section>
-
-  <!-- ============ POR QUÉ ES DISTINTO ============ -->
-  <section class="py-24 md:py-32 relative bg-white">
-    <div class="absolute right-0 top-1/3 w-[400px] h-[400px] bg-orange-50 blob blur-[80px] pointer-events-none opacity-50"></div>
-
-    <div class="max-w-6xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16">
-        <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Ventajas</span>
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Por qué es distinto</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="reveal flex gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 shadow-amber-soft">
-          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-            <span class="iconify text-amber-600" data-icon="lucide:shield-check" data-width="24"></span>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold mb-2 text-slate-900">Tus datos viven en tu dispositivo</h3>
-            <p class="text-sm text-slate-500 leading-relaxed">Cuadre no envía nada a ningún servidor. No le entrega nada automáticamente a la ONAT. Vos generás el reporte, vos lo revisás, vos lo entregás. La app es una herramienta tuya, no un sistema de control.</p>
-          </div>
-        </div>
-
-        <div class="reveal flex gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 shadow-amber-soft">
-          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-            <span class="iconify text-amber-600" data-icon="lucide:wifi-off" data-width="24"></span>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold mb-2 text-slate-900">Funciona sin internet</h3>
-            <p class="text-sm text-slate-500 leading-relaxed">Vendé, cerrá caja y consultá inventario aunque no tengas conexión. Cuando la app sincroniza algo (y solo si querés), lo hace localmente.</p>
-          </div>
-        </div>
-
-        <div class="reveal flex gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 shadow-amber-soft">
-          <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-            <span class="iconify text-amber-600" data-icon="lucide:map-pin" data-width="24"></span>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold mb-2 text-slate-900">Hecho para la realidad cubana</h3>
-            <p class="text-sm text-slate-500 leading-relaxed">No es una app gringa adaptada. Sabe qué es Transfermóvil, qué es EnZona, cómo funciona el MLC, qué tasas consultar cada día. Habla tu idioma: "cuadrar la caja", "punto de venta", "consumidor final".</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SUGERENCIAS DE NEGOCIOS ============ -->
-  <section class="py-24 md:py-32 bg-slate-50 border-y border-amber-100">
+  <!-- ============ PROBLEM ============ -->
+  <section class="py-20 md:py-28 relative">
     <div class="max-w-5xl mx-auto px-6 text-center">
-      <span class="text-xs font-medium uppercase tracking-widest text-amber-600 mb-4 block">Para quién es</span>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">Diseñado para tu negocio en Cuba</h2>
-      <p class="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed mb-12">Cualquier negocio donde se reciba dinero en varios métodos y se necesite reconciliar al final del día.</p>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">🛒</span>
-          <span class="text-sm font-semibold text-slate-700">Tiendas de repuestos</span>
+      <div class="reveal">
+        <span class="text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">El problema</span>
+        <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+          Cerrar la caja<br><span class="text-white/40">no debería ser una pesadilla.</span>
+        </h2>
+        <p class="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
+          Cada noche, miles de MIPYMES cubanas pierden tiempo y dinero intentando reconciliar ventas en efectivo, Transfermóvil, EnZona, USD, EUR y MLC. Lo hacen a mano, en una libreta o en Excel. Y casi siempre falta algo.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14">
+        <div class="reveal bento-card p-6 text-left">
+          <div class="w-11 h-11 rounded-xl bg-rose-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-rose-400" data-icon="lucide:alarm-clock-off" data-width="20"></span>
+          </div>
+          <h3 class="font-semibold text-white mb-1.5">Horas perdidas</h3>
+          <p class="text-sm text-white/50 leading-relaxed">Cuadres manuales que consumen 30, 60 o más minutos cada noche al cierre.</p>
         </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">☕</span>
-          <span class="text-sm font-semibold text-slate-700">Cafeterías y panaderías</span>
+        <div class="reveal bento-card p-6 text-left">
+          <div class="w-11 h-11 rounded-xl bg-rose-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-rose-400" data-icon="lucide:search-x" data-width="20"></span>
+          </div>
+          <h3 class="font-semibold text-white mb-1.5">Dinero que no aparece</h3>
+          <p class="text-sm text-white/50 leading-relaxed">Diferencias entre lo esperado y lo real que nadie sabe explicar al día siguiente.</p>
         </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">🔧</span>
-          <span class="text-sm font-semibold text-slate-700">Ferreterías y bazares</span>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">💊</span>
-          <span class="text-sm font-semibold text-slate-700">Farmacias independientes</span>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">💈</span>
-          <span class="text-sm font-semibold text-slate-700">Barberías y peluquerías</span>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">🛠️</span>
-          <span class="text-sm font-semibold text-slate-700">Talleres de mecánica</span>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">🍕</span>
-          <span class="text-sm font-semibold text-slate-700">Expendios de comida</span>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-white border border-amber-100 flex flex-col items-center gap-3 transition-all hover:bg-amber-50 hover:scale-105 shadow-amber-soft">
-          <span class="text-4xl">🏪</span>
-          <span class="text-sm font-semibold text-slate-700">Cualquier MIPYME que venda</span>
+        <div class="reveal bento-card p-6 text-left">
+          <div class="w-11 h-11 rounded-xl bg-rose-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-rose-400" data-icon="lucide:file-warning" data-width="20"></span>
+          </div>
+          <h3 class="font-semibold text-white mb-1.5">Reportes atrasados</h3>
+          <p class="text-sm text-white/50 leading-relaxed">El libro de ventas de la ONAT se arma con días de retraso y riesgo de errores.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ DESCARGAS ============ -->
-  <section id="descargas" class="py-24 md:py-32 relative bg-amber-50 border-t border-amber-100">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-100 blob blur-[100px] pointer-events-none opacity-60"></div>
-    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <div class="w-16 h-16 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center mx-auto mb-6">
-        <span class="iconify text-amber-600" data-icon="lucide:download" data-width="32"></span>
+  <!-- ============ FEATURES BENTO ============ -->
+  <section id="caracteristicas" class="py-20 md:py-28 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 md:mb-20">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Características</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
+          Todo lo que tu negocio<br><span class="gradient-amber">necesita en una app.</span>
+        </h2>
+        <p class="reveal text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
+          Herramientas reales para el día a día de tu MIPYME. No es una app gringa adaptada, es una app hecha para la realidad cubana.
+        </p>
       </div>
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Descargá la app ahora</h2>
-      <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-        Instalá Cuadre en tu dispositivo Android y empezá a controlar tu negocio hoy mismo. Sin registros, sin complicaciones.
-      </p>
-      <a href="https://www.dropbox.com/scl/fi/nm5sbazcbg8f7aedhh3cn/cuadre-v.2.apk?rlkey=5gcemkxpekny1qkg9j2xldaiu&st=02g6iri8&dl=1" target="_blank" rel="noopener noreferrer" class="btn-amber text-white text-base font-medium h-14 px-10 rounded-full inline-flex items-center gap-3 transition-all duration-300">
-        Descargar APK
-        <span class="iconify" data-icon="lucide:arrow-down-to-line" data-width="20"></span>
-      </a>
-      <p class="text-xs text-slate-500 mt-6">Versión 2.0 • Requiere Android 8.0 o superior</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Big card: Cierre de caja -->
+        <div class="reveal bento-card md:col-span-2 md:row-span-2 p-8 md:p-10 flex flex-col">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/15 flex items-center justify-center">
+              <span class="iconify text-amber-400" data-icon="lucide:scale" data-width="26"></span>
+            </div>
+            <span class="text-xs font-medium uppercase tracking-widest text-amber-500/80">El corazón del producto</span>
+          </div>
+          <h3 class="font-display text-2xl md:text-3xl font-bold mb-3">Cierre de caja con conciliación</h3>
+          <p class="text-white/60 leading-relaxed mb-6">
+            Un botón, ingresás los montos reales contados, y la app te muestra la diferencia por método: ✓ OK, ⚠ Faltan $X, +Sobran $Y. Agregá notas, registrá gastos y compartí el resumen por WhatsApp. En 5 minutos, listo.
+          </p>
+
+          <div class="mt-auto grid grid-cols-2 gap-3">
+            <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="iconify text-emerald-400" data-icon="lucide:check-circle-2" data-width="14"></span>
+                <span class="text-xs text-white/60">Efectivo</span>
+              </div>
+              <p class="text-sm font-semibold text-emerald-300">OK · $2,100</p>
+            </div>
+            <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="iconify text-amber-400" data-icon="lucide:alert-triangle" data-width="14"></span>
+                <span class="text-xs text-white/60">Transfermóvil</span>
+              </div>
+              <p class="text-sm font-semibold text-amber-300">Faltan $15</p>
+            </div>
+            <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="iconify text-emerald-400" data-icon="lucide:check-circle-2" data-width="14"></span>
+                <span class="text-xs text-white/60">EnZona</span>
+              </div>
+              <p class="text-sm font-semibold text-emerald-300">OK · $580</p>
+            </div>
+            <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="iconify text-sky-400" data-icon="lucide:plus-circle" data-width="14"></span>
+                <span class="text-xs text-white/60">USD</span>
+              </div>
+              <p class="text-sm font-semibold text-sky-300">Sobran $5</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Punto de venta -->
+        <div class="reveal bento-card p-7 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-amber-400" data-icon="lucide:scan-barcode" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Punto de venta rápido</h3>
+          <p class="text-sm text-white/55 leading-relaxed">Buscá productos por nombre o código, armá el carrito y cobrá. Aceptá pagos mixtos en una sola venta. Ticket por WhatsApp o PDF.</p>
+        </div>
+
+        <!-- Tasas de cambio -->
+        <div class="reveal bento-card p-7 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-amber-400" data-icon="lucide:refresh-cw" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Tasas de cambio del día</h3>
+          <p class="text-sm text-white/55 leading-relaxed">Cargá USD, EUR y MLC una vez al día. Todas las ventas se convierten a CUP automáticamente. Historial completo.</p>
+        </div>
+
+        <!-- Inventario -->
+        <div class="reveal bento-card p-7 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-amber-400" data-icon="lucide:warehouse" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Inventario diario</h3>
+          <p class="text-sm text-white/55 leading-relaxed">Controlá existencias en almacén y punto de venta. Avisos de stock bajo. Mové mercadería con un toque.</p>
+        </div>
+
+        <!-- Reportes -->
+        <div class="reveal bento-card p-7 flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-4">
+            <span class="iconify text-amber-400" data-icon="lucide:bar-chart-3" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Reportes que sí usás</h3>
+          <p class="text-sm text-white/55 leading-relaxed">Top productos, ventas por día, margen y ganancia. Filtrá por fecha y usuario. Exportá a Excel o PDF.</p>
+        </div>
+
+        <!-- Libro ONAT -->
+        <div class="reveal bento-card md:col-span-2 p-7 flex flex-col md:flex-row gap-5 items-start">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+            <span class="iconify text-amber-400" data-icon="lucide:file-text" data-width="22"></span>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-semibold mb-2">Libro de Ventas ONAT</h3>
+            <p class="text-sm text-white/55 leading-relaxed mb-3">Generá el reporte tributario a partir de tus ventas, con cálculo de impuestos según tu régimen (General, Simplificado o Especial). Vos decidís qué incluir, no la app.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70">Régimen General</span>
+              <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70">Simplificado</span>
+              <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70">Especial</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ============ CTA FINAL ============ -->
-  <section id="contacto" class="py-24 md:py-32 relative overflow-hidden bg-white">
-    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">Empezá hoy</h2>
-      <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="como-funciona" class="py-20 md:py-28 relative bg-gradient-to-b from-transparent via-ink-900/50 to-transparent">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14 md:mb-20">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Cómo funciona</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
+          De caos a control en <span class="gradient-amber">3 pasos.</span>
+        </h2>
+      </div>
+
+      <div class="relative">
+        <!-- Timeline line -->
+        <div class="hidden md:block absolute top-12 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+          <div class="reveal text-center relative">
+            <div class="w-24 h-24 mx-auto rounded-full bg-ink-800 border border-amber-500/30 flex items-center justify-center mb-6 relative z-10 glow-amber-sm">
+              <span class="font-display font-bold text-3xl gradient-amber">01</span>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-3">Cargá tus productos</h3>
+            <p class="text-sm text-white/55 leading-relaxed max-w-xs mx-auto">Dales de alta con nombre, precio y stock inicial. Configurá las tasas del día (USD, EUR, MLC) en 30 segundos.</p>
+          </div>
+
+          <div class="reveal text-center relative">
+            <div class="w-24 h-24 mx-auto rounded-full bg-ink-800 border border-amber-500/30 flex items-center justify-center mb-6 relative z-10 glow-amber-sm">
+              <span class="font-display font-bold text-3xl gradient-amber">02</span>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-3">Vendé durante el día</h3>
+            <p class="text-sm text-white/55 leading-relaxed max-w-xs mx-auto">Usá el punto de venta para cobrar en efectivo, Transfermóvil, EnZona, USD, EUR o MLC. Pagos mixtos en una sola venta.</p>
+          </div>
+
+          <div class="reveal text-center relative">
+            <div class="w-24 h-24 mx-auto rounded-full bg-ink-800 border border-amber-500/30 flex items-center justify-center mb-6 relative z-10 glow-amber-sm">
+              <span class="font-display font-bold text-3xl gradient-amber">03</span>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-3">Cerrá la caja</h3>
+            <p class="text-sm text-white/55 leading-relaxed max-w-xs mx-auto">Tocá "Cerrar caja", ingresá los montos contados, y Cuadre te muestra la diferencia por método. Compartí el resumen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-14">
+        <a href="#descargas" class="btn-primary h-12 px-7 rounded-full text-sm inline-flex items-center gap-2">
+          Empezar ahora
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="galeria" class="py-20 md:py-28 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Galería</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Mira cómo funciona</h2>
+        <p class="reveal text-white/60 text-lg max-w-xl mx-auto">Una interfaz limpia, pensada para que cierres tu caja en 5 minutos.</p>
+      </div>
+
+      <div class="relative overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6">
+        <div class="flex gap-5 snap-x snap-mandatory w-max mx-auto">
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/0e6ff9c7-e213-41bc-9f5c-7ea529063a4f.jpeg?auth_key=1884324312-fb8a9b51907b4ef6b4b1f22520e9e8e6-0-7e788e411e96e33176fcd5340582c794" alt="Dashboard de Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink-950/95 to-transparent p-4">
+              <span class="text-white font-semibold text-sm">Inicio: Resumen diario y alertas</span>
+            </div>
+          </div>
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/75b9dd73-3396-43b5-9e29-5aa20819ea53.jpeg?auth_key=1884324312-6a457d51a96d453fa9dbd23e636b5692-0-6778c2e427c86151e86e3fc3e61c77d0" alt="Punto de venta de Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink-950/95 to-transparent p-4">
+              <span class="text-white font-semibold text-sm">Vender: Punto de venta rápido</span>
+            </div>
+          </div>
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/95579847-7b06-4b52-b6ed-de992389be4e.jpeg?auth_key=1884324312-82b14b22fdf54a71983f2297c2fad566-0-8a70003609c13cb0d9bb74e6be6f6a8e" alt="Cierre de caja en Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink-950/95 to-transparent p-4">
+              <span class="text-white font-semibold text-sm">Cierre: Conciliación exacta</span>
+            </div>
+          </div>
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/6d63f9a0-21f1-45ce-b0a9-afdd01f9b8ee.jpeg?auth_key=1884324312-e9e92dcf169d4c7397afeda657656f73-0-aef6e933d33b65a348756b236a4fe5d7" alt="Reportes de ventas en Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink-950/95 to-transparent p-4">
+              <span class="text-white font-semibold text-sm">Reportes: Top productos</span>
+            </div>
+          </div>
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/d6e2b15d-2bc8-4ba3-a825-0e43c469f834.jpeg?auth_key=1884324312-566ae9fdac354a6995bb404561e1f8e5-0-a5b1ee04a93d9389b8eaf8836f4197d2" alt="Tasas del día en Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink-950/95 to-transparent p-4">
+              <span class="text-white font-semibold text-sm">Tasas: Conversión a CUP</span>
+            </div>
+          </div>
+          <div class="reveal snap-center flex-shrink-0 w-72 md:w-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative group">
+            <img src="https://z-cdn-media.chatglm.cn/files/a55a8792-1331-4551-8192-8a2228f433ff.jpeg?auth_key=1884324312-f96e8b893d144482ad3eca90a1ace44a-0-261610c0367fad213c966c5fdbe293f9" alt="Menú lateral de Cuadre" class="w-full h-auto object-cover" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ink-950/95 to-transparent p-4">
+              <span class="text-white font-semibold text-sm">Menú: Todo a la mano</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-white/30 text-sm mt-4 md:hidden">Desliza horizontalmente para ver más →</p>
+    </div>
+  </section>
+
+  <!-- ============ WHY DIFFERENT ============ -->
+  <section class="py-20 md:py-28 relative">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Ventajas</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Por qué es distinto</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="reveal bento-card p-7">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-5">
+            <span class="iconify text-amber-400" data-icon="lucide:shield-check" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Tus datos viven en tu dispositivo</h3>
+          <p class="text-sm text-white/55 leading-relaxed">Cuadre no envía nada a ningún servidor. No le entrega nada automáticamente a la ONAT. Vos generás el reporte, vos lo revisás, vos lo entregás. La app es una herramienta tuya, no un sistema de control.</p>
+        </div>
+        <div class="reveal bento-card p-7">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-5">
+            <span class="iconify text-amber-400" data-icon="lucide:wifi-off" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Funciona sin internet</h3>
+          <p class="text-sm text-white/55 leading-relaxed">Vendé, cerrá caja y consultá inventario aunque no tengas conexión. Cuando la app sincroniza algo (y solo si querés), lo hace localmente. Pensado para la realidad de la conectividad en Cuba.</p>
+        </div>
+        <div class="reveal bento-card p-7">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center mb-5">
+            <span class="iconify text-amber-400" data-icon="lucide:map-pin" data-width="22"></span>
+          </div>
+          <h3 class="font-display text-lg font-semibold mb-2">Hecho para la realidad cubana</h3>
+          <p class="text-sm text-white/55 leading-relaxed">No es una app gringa adaptada. Sabe qué es Transfermóvil, qué es EnZona, cómo funciona el MLC, qué tasas consultar cada día. Habla tu idioma: "cuadrar la caja", "punto de venta", "consumidor final".</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARATIVE ============ -->
+  <section id="comparativa" class="py-20 md:py-28 relative bg-gradient-to-b from-transparent via-ink-900/50 to-transparent">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Comparativa</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Cuadre vs. el resto</h2>
+        <p class="reveal text-white/60 text-lg max-w-xl mx-auto">Por qué cambiar la libreta y el Excel por una herramienta hecha para tu negocio.</p>
+      </div>
+
+      <div class="reveal overflow-hidden rounded-2xl border border-white/10">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-white/5">
+              <th class="text-left p-4 font-medium text-white/70">Característica</th>
+              <th class="p-4 text-center">
+                <span class="font-display font-bold gradient-amber text-base">Cuadre</span>
+              </th>
+              <th class="p-4 text-center text-white/50 font-medium">Libreta / Excel</th>
+              <th class="p-4 text-center text-white/50 font-medium">Apps genéricas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-white/5">
+              <td class="p-4 text-white/70">Funciona offline</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+            </tr>
+            <tr class="border-t border-white/5 bg-white/[0.02]">
+              <td class="p-4 text-white/70">Conciliación automática por método</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+            </tr>
+            <tr class="border-t border-white/5">
+              <td class="p-4 text-white/70">Transfermóvil, EnZona, MLC, USD, EUR</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+            </tr>
+            <tr class="border-t border-white/5 bg-white/[0.02]">
+              <td class="p-4 text-white/70">Tasas de cambio del día</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-amber-400 inline" data-icon="lucide:minus" data-width="18"></span></td>
+            </tr>
+            <tr class="border-t border-white/5">
+              <td class="p-4 text-white/70">Libro de Ventas ONAT</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+            </tr>
+            <tr class="border-t border-white/5 bg-white/[0.02]">
+              <td class="p-4 text-white/70">Tus datos quedan en tu dispositivo</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+            </tr>
+            <tr class="border-t border-white/5">
+              <td class="p-4 text-white/70">Cierre de caja en 5 minutos</td>
+              <td class="p-4 text-center"><span class="iconify text-emerald-400 inline" data-icon="lucide:check" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-rose-400 inline" data-icon="lucide:x" data-width="18"></span></td>
+              <td class="p-4 text-center"><span class="iconify text-amber-400 inline" data-icon="lucide:minus" data-width="18"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BUSINESS TYPES ============ -->
+  <section class="py-20 md:py-28 relative">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Para quién es</span>
+      <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Diseñado para tu negocio</h2>
+      <p class="reveal text-white/60 text-lg max-w-2xl mx-auto leading-relaxed mb-12">Cualquier MIPYME donde se reciba dinero en varios métodos y se necesite reconciliar al final del día.</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">🛒</span>
+          <span class="text-sm font-medium text-white/80">Tiendas de repuestos</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">☕</span>
+          <span class="text-sm font-medium text-white/80">Cafeterías y panaderías</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">🔧</span>
+          <span class="text-sm font-medium text-white/80">Ferreterías y bazares</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">💊</span>
+          <span class="text-sm font-medium text-white/80">Farmacias independientes</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">💈</span>
+          <span class="text-sm font-medium text-white/80">Barberías y peluquerías</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">🛠️</span>
+          <span class="text-sm font-medium text-white/80">Talleres de mecánica</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">🍕</span>
+          <span class="text-sm font-medium text-white/80">Expendios de comida</span>
+        </div>
+        <div class="reveal bento-card p-5 flex flex-col items-center gap-2.5">
+          <span class="text-3xl">🏪</span>
+          <span class="text-sm font-medium text-white/80">Cualquier MIPYME</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="py-20 md:py-28 relative bg-gradient-to-b from-transparent via-ink-900/50 to-transparent">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Testimonios</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Negocios reales, resultados reales</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="reveal bento-card p-7">
+          <div class="flex gap-1 mb-4 text-amber-400">
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+          </div>
+          <p class="text-white/75 text-sm leading-relaxed mb-5">"Antes tardaba una hora cuadrando la caja cada noche. Ahora son 5 minutos y sé exactamente dónde está cada peso. No vuelvo a la libreta."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-display font-bold text-ink-950">RM</div>
+            <div>
+              <p class="text-sm font-medium text-white">Ricardo M.</p>
+              <p class="text-xs text-white/40">Tienda de repuestos · La Habana</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bento-card p-7">
+          <div class="flex gap-1 mb-4 text-amber-400">
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+          </div>
+          <p class="text-white/75 text-sm leading-relaxed mb-5">"El reporte de la ONAT me tomaba dos días al mes. Con Cuadre lo genero en 5 minutos. Y lo mejor: mis datos no se van a ningún servidor."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-display font-bold text-ink-950">YP</div>
+            <div>
+              <p class="text-sm font-medium text-white">Yanara P.</p>
+              <p class="text-xs text-white/40">Cafetería · Santiago de Cuba</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bento-card p-7">
+          <div class="flex gap-1 mb-4 text-amber-400">
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+            <span class="iconify" data-icon="lucide:star" data-width="16"></span>
+          </div>
+          <p class="text-white/75 text-sm leading-relaxed mb-5">"Cobro en USD, EUR, MLC, Transfermóvil y efectivo. Antes era un caos. Ahora Cuadre convierte todo a CUP y me dice si cuadró o no. Imprescindible."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-display font-bold text-ink-950">JL</div>
+            <div>
+              <p class="text-sm font-medium text-white">José L.</p>
+              <p class="text-xs text-white/40">Ferretería · Holguín</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="py-20 md:py-28 relative">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <span class="reveal text-xs font-medium uppercase tracking-widest text-amber-500 mb-4 block">Preguntas frecuentes</span>
+        <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Lo que querés saber</h2>
+      </div>
+
+      <div class="space-y-3">
+        <div class="reveal faq-item bento-card p-5">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left">
+            <span class="font-medium text-white">¿Necesito internet para usar Cuadre?</span>
+            <span class="iconify text-amber-400 faq-icon flex-shrink-0" data-icon="lucide:plus" data-width="20"></span>
+          </button>
+          <div class="faq-body text-sm text-white/55 leading-relaxed">No. Cuadre funciona 100% offline. Vendé, cerrá caja y consultá inventario sin conexión. La app guarda todo localmente en tu dispositivo.</div>
+        </div>
+
+        <div class="reveal faq-item bento-card p-5">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left">
+            <span class="font-medium text-white">¿Cuadre envía mis datos a la ONAT automáticamente?</span>
+            <span class="iconify text-amber-400 faq-icon flex-shrink-0" data-icon="lucide:plus" data-width="20"></span>
+          </button>
+          <div class="faq-body text-sm text-white/55 leading-relaxed">No. Cuadre no envía nada a ningún servidor. Vos generás el reporte del Libro de Ventas, vos lo revisás y vos decidís entregarlo. La app es una herramienta tuya, no un sistema de control.</div>
+        </div>
+
+        <div class="reveal faq-item bento-card p-5">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left">
+            <span class="font-medium text-white">¿Qué métodos de pago soporta?</span>
+            <span class="iconify text-amber-400 faq-icon flex-shrink-0" data-icon="lucide:plus" data-width="20"></span>
+          </button>
+          <div class="faq-body text-sm text-white/55 leading-relaxed">Efectivo (CUP), Transfermóvil, EnZona, USD, EUR y MLC. Aceptá pagos mixtos en una sola venta y la app convierte automáticamente todo a CUP según las tasas del día que vos cargues.</div>
+        </div>
+
+        <div class="reveal faq-item bento-card p-5">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left">
+            <span class="font-medium text-white">¿En qué dispositivos funciona?</span>
+            <span class="iconify text-amber-400 faq-icon flex-shrink-0" data-icon="lucide:plus" data-width="20"></span>
+          </button>
+          <div class="faq-body text-sm text-white/55 leading-relaxed">Cuadre es una app Android que requiere Android 8.0 o superior. Se instala descargando el APK, sin necesidad de pasar por Google Play.</div>
+        </div>
+
+        <div class="reveal faq-item bento-card p-5">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left">
+            <span class="font-medium text-white">¿Cómo se instala el APK?</span>
+            <span class="iconify text-amber-400 faq-icon flex-shrink-0" data-icon="lucide:plus" data-width="20"></span>
+          </button>
+          <div class="faq-body text-sm text-white/55 leading-relaxed">Descargá el archivo APK desde el botón de descarga, abrílo desde tu dispositivo, y si Android te pide autorización para instalar apps de origen desconocido, aceptá. En menos de un minuto queda instalada.</div>
+        </div>
+
+        <div class="reveal faq-item bento-card p-5">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left">
+            <span class="font-medium text-white">¿Tiene costo?</span>
+            <span class="iconify text-amber-400 faq-icon flex-shrink-0" data-icon="lucide:plus" data-width="20"></span>
+          </button>
+          <div class="faq-body text-sm text-white/55 leading-relaxed">Descargá la app y empezá a usarla. Para consultas sobre licenciamiento, soporte o funcionalidades adicionales, contactanos directamente por correo o teléfono.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD CTA ============ -->
+  <section id="descargas" class="py-20 md:py-32 relative overflow-hidden">
+    <div class="aurora"></div>
+    <div class="absolute inset-0 bg-grid opacity-40"></div>
+
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="gradient-border p-10 md:p-16 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/5 mb-8">
+          <span class="iconify text-amber-400" data-icon="lucide:sparkles" data-width="14"></span>
+          <span class="text-xs font-medium text-amber-200/90 tracking-wide">Versión 2.0 disponible</span>
+        </div>
+
+        <h2 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-5 leading-tight">
+          Descargá Cuadre<br><span class="gradient-amber">y tomá el control hoy.</span>
+        </h2>
+        <p class="text-white/60 text-lg max-w-xl mx-auto leading-relaxed mb-10">
+          Instalá la app en tu Android, cargá tus productos y tus tasas del día, y registrá tu primera venta. En menos de diez minutos ya vas a estar cerrando tu primera caja con Cuadre.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+          <a href="https://www.dropbox.com/scl/fi/nm5sbazcbg8f7aedhh3cn/cuadre-v.2.apk?rlkey=5gcemkxpekny1qkg9j2xldaiu&st=02g6iri8&dl=1" target="_blank" rel="noopener noreferrer" class="btn-primary h-14 px-8 rounded-full inline-flex items-center gap-3 w-full sm:w-auto justify-center">
+            <span class="iconify" data-icon="lucide:arrow-down-to-line" data-width="20"></span>
+            Descargar APK · v2.0
+          </a>
+          <a href="#contacto" class="btn-ghost h-14 px-8 rounded-full inline-flex items-center gap-2 w-full sm:w-auto justify-center">
+            Hablar con el equipo
+            <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+          </a>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/40">
+          <div class="flex items-center gap-1.5">
+            <span class="iconify text-amber-400/70" data-icon="lucide:smartphone" data-width="13"></span>
+            Android 8.0+
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="iconify text-amber-400/70" data-icon="lucide:download" data-width="13"></span>
+            Sin registros
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="iconify text-amber-400/70" data-icon="lucide:shield-check" data-width="13"></span>
+            Instalación segura
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contacto" class="py-20 md:py-28 relative">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="reveal font-display text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+        Empezá <span class="gradient-amber">hoy.</span>
+      </h2>
+      <p class="reveal text-white/60 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
         Cargá tus productos, tus tasas del día, y registrá tu primera venta. En menos de diez minutos ya vas a estar cerrando tu primera caja con Cuadre.
       </p>
-      <p class="text-2xl font-bold text-amber-600 mb-10">
+      <p class="reveal text-2xl md:text-3xl font-display font-bold gradient-amber mb-10">
         Tus ventas, tu caja, tu control.
       </p>
-      
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-        <a href="mailto:pedrolh@nauta.cu" class="btn-amber text-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 transition-all duration-300">
-          Enviar un correo
+
+      <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+        <a href="mailto:pedrolh@nauta.cu" class="btn-primary h-12 px-7 rounded-full text-sm inline-flex items-center gap-2">
           <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
+          Enviar un correo
         </a>
-        <a href="tel:+5353758234" class="border border-amber-200 text-amber-700 bg-white text-sm font-medium h-12 px-8 rounded-full inline-flex items-center gap-2 hover:border-amber-400 hover:bg-amber-50 transition-all duration-300">
-          Llamar ahora
+        <a href="tel:+5353758234" class="btn-ghost h-12 px-7 rounded-full text-sm inline-flex items-center gap-2">
           <span class="iconify" data-icon="lucide:phone" data-width="16"></span>
+          Llamar ahora
         </a>
       </div>
-      <p class="text-sm text-slate-500">Contáctanos a <a href="mailto:pedrolh@nauta.cu" class="text-amber-600 font-medium hover:underline">pedrolh@nauta.cu</a> o al <a href="tel:+5353758234" class="text-amber-600 font-medium hover:underline">+53 5375 8234</a>.</p>
+      <p class="reveal text-sm text-white/40">
+        Escribinos a <a href="mailto:pedrolh@nauta.cu" class="text-amber-400 font-medium hover:underline">pedrolh@nauta.cu</a> o al <a href="tel:+5353758234" class="text-amber-400 font-medium hover:underline">+53 5375 8234</a>.
+      </p>
     </div>
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="bg-slate-50 border-t border-amber-100 py-12">
+  <footer class="border-t border-white/5 py-10">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <img src="https://z-cdn-media.chatglm.cn/files/913c4d4f-7e13-4dd5-8472-30fc1996a5a4.png?auth_key=1881967285-0df0ac0998b24800a01b4ba6338c4093-0-d0bc642c5d2c51c14a1ee30a41499b3f" alt="Logotipo de 1869Apps" class="h-9 w-auto" />
-        <p class="text-xs text-slate-400">© 2025 1869apps. Todos los derechos reservados.</p>
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-300 to-amber-600 flex items-center justify-center font-display font-bold text-ink-950 text-sm">C</div>
+        <div>
+          <p class="text-sm font-medium text-white">Cuadre · 1869apps</p>
+          <p class="text-xs text-white/40">© 2025 1869apps. Todos los derechos reservados.</p>
+        </div>
       </div>
-      <a href="index.html" class="text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors">Volver al inicio</a>
+      <div class="flex items-center gap-6 text-sm text-white/50">
+        <a href="#caracteristicas" class="hover:text-amber-400 transition-colors">Características</a>
+        <a href="#descargas" class="hover:text-amber-400 transition-colors">Descargar</a>
+        <a href="mailto:pedrolh@nauta.cu" class="hover:text-amber-400 transition-colors">Contacto</a>
+      </div>
     </div>
   </footer>
 
   <!-- ============ SCRIPTS ============ -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Mobile menu
       const menuBtn = document.getElementById('menuBtn');
       const closeMenuBtn = document.getElementById('closeMenu');
       const mobileMenu = document.getElementById('mobileMenu');
       const mobileLinks = document.querySelectorAll('.mobile-link');
 
-      const toggleMenu = (open) => {
-        mobileMenu.classList.toggle('open', open);
-        menuBtn.setAttribute('aria-expanded', open);
-      };
-
+      const toggleMenu = (open) => { mobileMenu.classList.toggle('open', open); };
       menuBtn.addEventListener('click', () => toggleMenu(true));
       closeMenuBtn.addEventListener('click', () => toggleMenu(false));
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => toggleMenu(false));
-      });
+      mobileLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
 
-      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+      // Reveal on scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -431,11 +1157,44 @@
             observer.unobserve(entry.target);
           }
         });
-      }, observerOptions);
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
       document.querySelectorAll('.reveal').forEach((el, i) => {
-        el.style.transitionDelay = `${i * 0.05}s`;
+        el.style.transitionDelay = `${(i % 4) * 0.07}s`;
         observer.observe(el);
+      });
+
+      // Counter animation
+      const counters = document.querySelectorAll('.counter');
+      const counterObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.dataset.target, 10);
+            const duration = 1400;
+            const start = performance.now();
+            const step = (now) => {
+              const t = Math.min(1, (now - start) / duration);
+              const eased = 1 - Math.pow(1 - t, 3);
+              el.textContent = Math.round(target * eased).toString();
+              if (t < 1) requestAnimationFrame(step);
+              else el.textContent = target.toString();
+            };
+            requestAnimationFrame(step);
+            counterObs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(c => counterObs.observe(c));
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item');
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+          if (!isOpen) item.classList.add('open');
+        });
       });
     });
   </script>
